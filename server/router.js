@@ -16,6 +16,23 @@ passport.deserializeUser(function(obj, done) {
   done(null, obj);
 });
 
+passport.use(fitbitControl.fitbitStrategy);
+  router.get('/auth/fitbit', passport.authenticate('fitbit', { failureRedirect: '/login' }), function (req,res) {
+});
+
+// Tourney API
+router.get('/api/tournaments/public', tournaments.read);
+router.post('/api/tournaments', tournaments.create);
+router.put('/api/tournaments/:tournament_id', tournaments.update);
+router.delete('/api/tournaments/:tournament_id', tournaments.delete);
+
+// User Tournament API
+router.get('/api/tournaments/:username', user.readTournaments);
+router.get('/api/tournaments/:username/:publicOrPrivate', user.readTournaments); // might be able to handle this same logic within readTournaments
+router.post('/api/tournaments/:username/:tournament_id', user.enterTournament);
+router.delete('/api/tournaments/:username/:tournament_id', user.leaveTournament);
+
+
 router.get('/logout', function (req, res) {
   req.logout();
   res.redirect('/');
@@ -24,11 +41,6 @@ router.get('/logout', function (req, res) {
 router.get('/login', function (req, res, next){
   res.redirect('/auth/fitbit');
 });
-
-passport.use(fitbitControl.fitbitStrategy);
-router.get('/auth/fitbit', passport.authenticate('fitbit', { failureRedirect: '/login' }), function (req,res) {
-});
-
 
 router.get('/auth/fitbit/callback', passport.authenticate('fitbit', { failureRedirect: '/login' }), function (req,res) {
   console.log(res.session);
