@@ -1,0 +1,29 @@
+<!doctype html>
+<html ng-app="fitMunk">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <!-- Favicon -->
+    <link rel='icon' href="./images/favicon.ico" />
+    <!-- CSS -->
+    <link rel="stylesheet" href="./styles/style.css">
+  </head>
+  <body>
+    <fm-navbar></fm-navbar>
+    <div class='main' ui-view></div>
+    <!-- Dependencies -->
+    <script src="./bower_components/jquery/dist/jquery.js"></script>
+    <script src="./bower_components/angular/angular.js"></script>
+    <script src="./bower_components/angular-route/angular-route.js"></script>
+    <script src="./bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <script src="./bower_components/json3/lib/json3.js"></script>
+
+    <!-- Application files -->
+    <script src="./scripts/lobby/lobby.js"></script>
+    <script src="./scripts/navbar/navbar.js"></script>
+    <script src="./scripts/services.js"></script>
+    <script src="./scripts/app.js"></script>
+</body>
+</html>

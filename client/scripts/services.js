@@ -1,4 +1,4 @@
-angular.module('pathleteApp.services', [])
+angular.module('fm.services', [])
 
 .factory('Info', function ($http) {
 

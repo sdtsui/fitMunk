@@ -1,0 +1,58 @@
+body {
+	margin: 0;
+}
+
+.main {
+	margin-top: 10vh;
+	position: absolute;
+}
+
+.navbar {
+	height: 10vh;
+	width: 100%;
+	top: 0;
+	left: 0;
+	background-color: rgb(195,255,129);
+	position: fixed;
+	z-index: 100;
+	box-shadow: 0 -2px 5px black;
+	text-align: center;
+}
+
+#nav-logo3, #nav-icon {
+	height: 8vh;
+	padding: 1vh 2vh 1vh 2vh;
+	display: inline-block;
+}
+
+#nav-logo3:hover, #nav-icon:hover {
+	background-color: rgb(161,219,60);
+}
+
+#nav-logo3 {
+	float: left;
+}
+
+#nav-icon {
+	float: right;
+}
+
+#nav-search {
+	border-radius: 2px;
+	border: none;
+	padding: 5px;
+	margin: 3vh;
+	width: 40vw;
+	font-size: 3vh;
+}
+
+#nav-search:focus {
+	outline: 2px solid rgb(161,219,60);
+}
+
+.tourny-card {
+	width: 80vw;
+	height: 50vw;
+	box-shadow: 0 0 1px black;
+	margin: 5vh 10vw 0 10vw;
+}
