@@ -1,5 +1,6 @@
 var Firebase = require('firebase');
 
-var db = new Firebase('https://pathlete.firebaseio.com/');
+//connect to Firebase instance
+var db = new Firebase('https://fitmunk.firebaseio.com/');
 
 module.exports = db;
