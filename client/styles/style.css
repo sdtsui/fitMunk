@@ -1,10 +1,13 @@
 body {
 	margin: 0;
+  font-family: Varela;
 }
 
 .main {
-	margin-top: 10vh;
+	margin: 10vh 10% 0 10%;
 	position: absolute;
+	width: 80%;
+	text-align: center;
 }
 
 .navbar {
@@ -25,7 +28,7 @@ body {
 	display: inline-block;
 }
 
-#nav-logo3:hover, #nav-icon:hover {
+#nav-logo3:hover, #nav-icon:hover, #left-navi:hover, #right-navi:hover {
 	background-color: rgb(161,219,60);
 }
 
@@ -50,9 +53,81 @@ body {
 	outline: 2px solid rgb(161,219,60);
 }
 
+.left {
+	height: 100%;
+	position: fixed;
+	left: -200px;
+	width: 200px;
+	background: rgb(191,255,98);
+	box-shadow: -3px 0 5px black;
+	z-index: 101;
+}
+
+.right {
+	height: 100%;
+	position: fixed;
+	top: 0px;
+	right: -200px;
+	width: 200px;
+	background: rgb(191,255,98);
+	box-shadow: 3px 0 5px black;
+	z-index: 101;
+}
+
+#left-anchor, #right-anchor {
+	color: black;
+	text-decoration: none;
+}
+
+#left-navi, #right-navi {
+	padding: 20px;
+	font-size: 20px;
+}
+
+.tourny-cards {
+	display: inline-block;
+}
+
 .tourny-card {
-	width: 80vw;
-	height: 50vw;
-	box-shadow: 0 0 1px black;
-	margin: 5vh 10vw 0 10vw;
+	max-width: 400px;
+	max-height: 100px;
+	border-radius: 1px;
+	margin: 5px 5px 0 0;
+	padding: 35px;
+	color: white;
+	font-size: 20px;
+	text-shadow: 0 0 8px black;
+	display: inline-block;
+}
+
+#tourny-hiking {
+	background: url('../images/challenge-hiking.jpg');
+	background-size: cover;
+	-webkit-filter: sepia(1) saturate(10) hue-rotate(185deg);
+	filter: sepia(1);
+	filter: saturate(10);
+	filter: hue-rotate(185deg);
+}
+
+
+#tourny-marathon {
+	background: url('../images/challenge-marathon.jpg');
+	background-size: cover;
+	-webkit-filter: sepia(1) saturate(4) hue-rotate(345deg);
+	filter: sepia(1);
+	filter: saturate(4);
+	filter: hue-rotate(345deg);
+}
+
+#tourny-beach {
+	background: url('../images/challenge-beach.jpg');
+	background-size: cover;
+	-webkit-filter: sepia(1) saturate(5) hue-rotate(275deg);
+	filter: sepia(1);
+	filter: saturate(5);
+	filter: hue-rotate(275deg);
+}
+
+#tourny-hiking:hover, #tourny-marathon:hover, #tourny-beach:hover {
+	box-shadow: 0 0 7px red;
 }

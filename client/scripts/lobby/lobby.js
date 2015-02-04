@@ -8,6 +8,7 @@ angular.module('fm.lobby', [])
 		_id: 'asd4758asdf586',
 		name: '500K Challenge',
 		description: 'Walk 500000 Weekly!',
+		theme: 'hiking',
 		status: 'OPEN',
 		occurence: 7,
 		isPrivate: false,
@@ -25,22 +26,74 @@ angular.module('fm.lobby', [])
 		}
 	}
 
-	// for(var i = 0; i < 10; i++){
-	// 	var steps = Math.floor(Math.random()*1000000);
-	// 	tourny._id = 'asasdf'+steps;
-	// 	tourny.description = 'Walk '+steps+' Weekly';
-	// 	tourny.name = steps+' Challenge';
-	// 	tourny.goal = steps;
-		$scope.data.push(tourny);
-	// }
+	//test data
+	var tourny1 = {
+		_id: 'asd4758asdf586asd',
+		name: '600K Challenge',
+		description: 'Walk 600000 Weekly!',
+		theme: 'marathon',
+		status: 'OPEN',
+		occurence: 7,
+		isPrivate: false,
+		startDate: '2015-2-14',
+		endDate: null,
+		goal: 600000,
+		participants: {
+			pending: [],
+			accepted: ['asdf1231234','asd1234asf']
+		},
+		result: {
+			gold: null,
+			silver: null,
+			bronze: null
+		}
+	}
+
+		var tourny2 = {
+		_id: 'asd4758asdf5asdfsd',
+		name: '700K Challenge',
+		description: 'Walk 700000 Weekly!',
+		theme: 'beach',
+		status: 'OPEN',
+		occurence: 7,
+		isPrivate: false,
+		startDate: '2015-2-14',
+		endDate: null,
+		goal: 700000,
+		participants: {
+			pending: [],
+			accepted: ['asdf1231234','asd1234asf']
+		},
+		result: {
+			gold: null,
+			silver: null,
+			bronze: null
+		}
+	}
+
+	$scope.data.push(tourny);
+	$scope.data.push(tourny1);
+	$scope.data.push(tourny2);
 })
 
-.directive('fmLobby',function(){
+.directive('fmLobby',function($animate){
 	return {
 		restrict  	 : 'EA',
 		scope				 : false,
 		replace   	 : true,
 		templateUrl  : '../scripts/lobby/lobby.html',
+		link				 : function(){
+		}
+	}
+})
+
+.directive('fmTournySearch',function(){
+	return {
+		restrict  	 : 'EA',
+		scope				 : false,
+		replace   	 : true,
+		controller   : 'LobbyCtrl',
+		templateUrl  : '../scripts/lobby/tournySearch.html',
 		link				 : function(){
 		}
 	}

@@ -1,4 +1,6 @@
-<div class='tourny-card' ng-repeat='tourny in data'>
-	<span>{{tourny.name}}</span><br>
-	<span>{{tourny.description}}</span>
+<div class='tourny-cards' ng-repeat='tourny in data | filter: query' ng-animate=" 'animate' ">
+	<div id='{{"tourny-"+tourny.theme}}' class='tourny-card'>
+		<span>{{tourny.name}}</span><br>
+		<span>{{tourny.description}}</span>
+	</div>
 </div>
