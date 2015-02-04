@@ -1,10 +1,10 @@
 var express = require('express');
 var router = express.Router();
 var request = require('request');
-var dbHelper = require('../utils/dbHelpers.js');
+var Users = require('./users/controller.js');
 var passport = require('passport');
 var FitbitApiClient = require('fitbit-node');
-var fitbitControl = require('../utils/fitbit.js');
+var fitbitControl = require('./utils/fitbit.js');
 
 
 passport.serializeUser(function(user, done) {
@@ -36,7 +36,7 @@ router.get('/auth/fitbit/callback', passport.authenticate('fitbit', { failureRed
 });
 
 router.get('/userdata', function(req, res) {
-  dbHelper.getUserStats(req.user.encodedId).once('value', function(data) {
+  Users.getUserStats(req.user.encodedId).once('value', function(data) {
       res.send(data.val());
     });
 });

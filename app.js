@@ -6,26 +6,23 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var passport = require('passport');
 
-var routes = require('./routes/index');
+var routes = require('./server/router.js');
 var session = require('express-session');
-
-
 
 var app = express();
 
-
-app.use(favicon(__dirname + '/public/favicon.ico'));
+app.use(favicon(__dirname + '/client/favicon.ico'));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-app.use('/progress',express.static(__dirname + '/./public'));
-app.use('/achievements',express.static(__dirname + '/./public'));
-app.use(express.static(__dirname + '/./public'));
+app.use('/progress',express.static(__dirname + '/./client'));
+app.use('/achievements',express.static(__dirname + '/./client'));
+app.use(express.static(__dirname + '/./client'));
 
 app.use(session({
-    secret: process.env.SESSION_SECRET,
+    secret: 'somesecret',
     resave: false,
     saveUninitialized: false
 }));

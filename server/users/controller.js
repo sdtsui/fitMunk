@@ -1,4 +1,4 @@
-var db = require('./db.js');
+var db = require('../utils/db.js');
 var request = require('request');
 
 module.exports = {
