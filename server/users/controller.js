@@ -1,6 +1,22 @@
 var db = require('../utils/db.js');
 var request = require('request');
 
+var user = {};
+
+user.readTournament = function(username, private){
+  // private will be an optional boolean true = return private tournaments only, false = return public tournaments only
+};
+
+user.enterTournament = function(username, tournament_id){
+
+};
+
+user.leaveTournament = function(username, tournament_id){
+
+};
+
+
+
 module.exports = {
   addUser: function (token, tokenSecret, profile, done){
     var err = '';
