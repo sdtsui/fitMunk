@@ -31,10 +31,8 @@ angular.module('fm.services', [])
     description: 'Walk 500000 Weekly!',
     theme: 'hiking',
     status: 'OPEN',
-    occurence: 7,
-    isPrivate: false,
     startDate: '2015-2-14',
-    endDate: null,
+    endDate: '2015-2-21',
     goal: 500000,
     participants: {
       pending: [],

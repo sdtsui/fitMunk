@@ -10,7 +10,11 @@ angular.module('fm.lobby', [])
 		scope				 : false,
 		replace   	 : true,
 		templateUrl  : '../scripts/lobby/lobby.html',
-		link				 : function(){
+		link				 : function(scope,el,attr){
+			$(el).find('#nav-create').on('click',function(){
+				console.log('hi');
+				$(el).find('.tourny-blackout').toggleClass('show');
+			})
 		}
 	}
 })

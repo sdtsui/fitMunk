@@ -24,18 +24,20 @@ body {
 }
 
 button#nav-create {
-    position: fixed;
-    font-size: 36px;
-    width: 50px;
-    height: 50px;
-    border: none;
-    border-radius: 30px;
-    background: rgb(15, 182, 255);
-    color: white;
-    font-weight: bold;
-    box-shadow: 0px 0px 10px gray;
-    bottom: 5vh;
-    right: 5vh;
+  position: fixed;
+  font-size: 36px;
+  width: 50px;
+  height: 50px;
+  border: none;
+  border-radius: 30px;
+  background: rgb(15, 182, 255);
+  color: white;
+  font-weight: bold;
+  box-shadow: 0px 0px 10px black;
+  bottom: 5vh;
+  right: 5vh;
+  z-index: 120;
+  padding: 5px;
 }
 
 button#nav-create:focus {
@@ -258,3 +260,42 @@ button#nav-create:focus {
 	position: relative;
 	box-shadow: 0 1px 5px gray;
 }
+
+.tourny-create {
+  width: 80%;
+  position: fixed;
+  background-color: rgb(15, 182, 255);
+  top: 13vh;
+  height: 58%;
+  margin: 5%;
+  border-radius: 1px;
+  padding: 5%;
+  text-align: left;
+  box-shadow: 0 0 5px black;
+}
+
+.tourny-blackout {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.85);
+  top: 0;
+  left: 0;
+  display: none;
+  z-index: 100;
+}
+
+.tourny-blackout.show {
+	display: inherit;
+}
+
+.tourny-create>input, .tourny-create>select {
+  border: none;
+  background-color: white;
+  padding: 5px;
+  border-radius: 2px;
+  width: 95%;
+  padding: 7px;
+  margin: 4px
+}
+

@@ -1,6 +1,29 @@
-<div class='tourny-cards' ng-repeat='tourny in tournaments | filter: query' ng-animate=" 'animate' ">
-	<div id='{{"tourny-"+tourny.theme}}' class='tourny-card'>
-		<span>{{tourny.name}}</span><br>
-		<span>{{tourny.description}}</span>
+<div>
+	<div class='tourny-cards' ng-repeat='tourny in tournaments | filter: query' ng-animate=" 'animate' ">
+		<div id='{{"tourny-"+tourny.theme}}' class='tourny-card'>
+			<span>{{tourny.name}}</span><br>
+			<span>{{tourny.description}}</span>
+		</div>
+	</div>
+	<button id='nav-create'>+</button>
+	<div class='tourny-blackout'>
+		<form class='tourny-create'>
+			Name<br>
+			<input type='text' placeholder='Name'></input><br>
+			Description<br>
+			<input type='text' placeholder='Description'></input><br>
+			Goal<br>
+			<input type='number' placeholder='Goal'></input><br>
+			Theme<br>
+			<select>
+				<option value='marathon'>Marathon</option>
+				<option value='beach'>Beach</option>
+				<option value='hiking'>Hiking</option>
+			</select><br>
+			Start<br>
+			<input type='date'></input><br>
+			End<br>
+			<input type='date'></input><br>
+		</form>
 	</div>
 </div>
