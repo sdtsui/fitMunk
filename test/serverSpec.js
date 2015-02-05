@@ -1,16 +1,23 @@
 var superagent    = require('superagent');
 var chai          = require('chai');
 var expect        = chai.expect;
-var Tournament   = require('../server/tournaments/model.js');
-var mongoose = require('mongoose');
+var Tournament    = require('../server/tournaments/model.js');
+var mongoose      = require('mongoose');
+
+var dbPath      = process.env.dbPath || 'mongodb://localhost/fitMunk';
+var db = mongoose.connect(dbPath);
+
 mongoose.connection.on('error', function(err) {
     console.error('MongoDB error: %s', err);
 });
+
+
 
 var Q = require('q');
 
 var find = Q.nbind(Tournament.find, Tournament);
 var findOne = Q.nbind(Tournament.findOne, Tournament);
+
 var exampleUsers = {
   1: derpMonkey
 
@@ -58,12 +65,14 @@ var paths = {
 // router.get('/api/tournaments/:username', Users.getTournaments); //body: action: public or private;
 
 
+var PRE_INSERTED_USER_ID = '54d34575d6ea4d32d3f1adf9';
+
 describe('SPOT TESTS: Single API Endpoints', function(){
 
   describe('Create One Tournament: ',function(){
+
     before(function(done){
       var delPath = paths.t + 'testDel';
-      console.log(delPath);
       superagent.del(delPath)
         .send()
         .end(function(err, res){
@@ -77,7 +86,7 @@ describe('SPOT TESTS: Single API Endpoints', function(){
     });
 
     it('creates a new tournament', function(done){
-      superagent.post(paths.t+'54d34575d6ea4d32d3f1adf9')
+      superagent.post(paths.t+PRE_INSERTED_USER_ID)
         .send({
           name : 'book',
           description: 'bookdescription',
@@ -95,7 +104,38 @@ describe('SPOT TESTS: Single API Endpoints', function(){
         });
     });
   });
-  xdescribe('Get One or All Tournaments : ',function(){});
+
+  describe('Get One or All Tournaments : ',function(){
+    it('gets all Tournaments (public)', function(done){
+      superagent.get(paths.t+'public')
+        .send()
+        .end(function(err, data){
+          if(err){console.log('error :', err);}
+          // console.log('data.res.text', data.res.text);
+          // console.log('data.res.body', data.res.body);
+          expect(data.res.body.length >0).to.equal(true);
+          done();
+        });
+    });
+    it('can get a specific tournament', function(done){
+      findOne({}).then(function(tourney){
+        console.log('tourney :', tourney);
+        if(tourney){
+          var t_id = tourney._id;
+          console.log('tID :', t_id);
+          superagent.get(paths.t+t_id)
+            .send()
+            .end(function(err, data){
+              if(err){console.log('error :', err);}
+              expect(data.res.body._id).to.equal(t_id.toString());
+              done();
+            });
+        } else {
+          done(new Error('no tourney'));
+        }
+      });
+    })
+  });
   xdescribe('Invite Handler : ',function(){});
   xdescribe('Delete a Tournament (prematurely)',function(){
     it('deletes a tournament', function(done){
