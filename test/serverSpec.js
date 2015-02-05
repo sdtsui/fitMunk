@@ -174,6 +174,8 @@ describe('SPOT TESTS: Single API Endpoints', function(){
     });
 
     it('can decline an invite for a user',function(done){
+      //not tested, but spot checked: 
+      //saw length of both arrays decrement.
       findOne({}).then(function(tourney){
         console.log('inside findone');
         if(tourney){
@@ -185,7 +187,6 @@ describe('SPOT TESTS: Single API Endpoints', function(){
             })
             .end(function(err, res){
               if(err){console.log('error :', err);}
-              //Mongoose ObjectId needs to be converted to a string.
               expect(res.statusCode).to.equal(204);
               done();
             });
@@ -195,8 +196,9 @@ describe('SPOT TESTS: Single API Endpoints', function(){
       });
 
     });
-    xit('can accept an invite for a user',function(done){
-      //accept not tested, don't have a second user/user creation ye
+    it('can accept an invite for a user',function(done){
+      //not tested, but spot checked: 
+      //saw length of both arrays decrement.
       findOne({}).then(function(tourney){
       if(tourney){
         var t_id = tourney._id;
@@ -205,16 +207,15 @@ describe('SPOT TESTS: Single API Endpoints', function(){
               user_id: PRE_INSERTED_USER_ID,
               action: 'accept', 
             })
-          .end(function(err, data){
+          .end(function(err, res){
             if(err){console.log('error :', err);}
-            //Mongoose ObjectId needs to be converted to a string.
-            expect(data.res.body._id).to.equal(t_id.toString());
+            expect(res.statusCode).to.equal(204);
             done();
           });
       } else {
         done(new Error('no tourney'));
       }
-    });
+      });
     });
 
   });
