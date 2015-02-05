@@ -135,17 +135,25 @@ tournaments.inviteHandler = function(req, res, next){
                 user.save();
               } else if (action === 'accept'){
                 console.log('invite: inside acc');
-
-                console.log('before: tour, user', tournament, user);
-
+                // console.log('Test: beforeLENGTH: tourP, tourA, userI, userA',
+                //   tournament.participantsPending.length,
+                //   tournament.participantsActive.length,
+                //   user.tournamentsInvited.length,
+                //   user.tournamentsActive.length
+                // );
                 tournament.participantsPending.pull(user_id);
                 tournament.participantsActive.addToSet(user_id);
                 user.tournamentsInvited.pull(tournament_id);
                 user.tournamentsActive.addToSet(tournament_id);
 
-                console.log('after: tour, user', tournament, user);
                 tournament.save();
                 user.save();
+                // console.log('Test: afterLENGTH: tourP, tourA, userI, userA',
+                //   tournament.participantsPending.length,
+                //   tournament.participantsActive.length,
+                //   user.tournamentsInvited.length,
+                //   user.tournamentsActive.length
+                // );
               } else if (action === 'invite'){
                 console.log('invite: inside inv');
                 tournament.participantsPending.addToSet(user_id);
