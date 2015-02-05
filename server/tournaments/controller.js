@@ -8,10 +8,11 @@ var findOne = Q.nbind(Tournament.findOne, Tournament);
 var create = Q.nbind(Tournament.create, Tournament);
 
 //old Namespaced
-var findOneTournament  = Q.nbind(Tournament.findById, Tournament);
+var findById  = Q.nbind(Tournament.findById, Tournament);
 var findOneAndUpdate = Q.nbind(Tournament.findOneAndUpdate, Tournament);
 var findOneAndRemove = Q.nbind(Tournament.findOneAndRemove, Tournament);
 
+var u_findById = Q.nbind(User.findById, User);
 
 var ObjectId = (require('mongoose').Types.ObjectId);
 
@@ -31,12 +32,9 @@ var tournaments = {};
 
 tournaments.read = function(req, res, next) {
   var id = req.params.tournament_id;
-  // console.log(req.params);
   if ( id ) {
-    console.log('inside ID');
-    findOneTournament(id)
+    findById(id)
       .then(function(tournament){
-        console.log('inside then : tournament: ', tournament);
         res.send(tournament);
       })
       .catch(function(error){
@@ -105,13 +103,25 @@ tournaments.inviteHandler = function(req, res, next){
   var user_id = req.body.user_id;
   var action = req.body.action;
 
-  findOneTournament({_id: tournament_id})
+  console.log('inside event handler: t_id, user_id, action :::',
+    tournament_id,
+    user_id,
+    action);
+
+  console.log('types: t, u, :   ',
+    typeof tournament_id,
+    typeof user_id);
+
+  findById(tournament_id)
     .then(function(tournament){
+      console.log('inviteHandler : ', 'after search for tournament');
       if (!tournament){
         res.send(new Error('Tournament does not exist.'));
       } else {
-        User.findOne({_id: user_id})
+        console.log('inviteHandler: found tourney: outside findOne');
+        u_findById(user_id)
           .then(function(user){
+            console.log('invitehandler: inside Then');
             if(!user){
               res.send(new Error('Tournament exists, but user does not.'))
             } else {
@@ -120,16 +130,29 @@ tournaments.inviteHandler = function(req, res, next){
                 console.log('invite: inside dec');
                 tournament.participantsPending.pull(user_id);
                 user.tournamentsInvited.pull(tournament_id);
+
+                tournament.save();
+                user.save();
               } else if (action === 'accept'){
                 console.log('invite: inside acc');
+
+                console.log('before: tour, user', tournament, user);
+
                 tournament.participantsPending.pull(user_id);
                 tournament.participantsActive.addToSet(user_id);
                 user.tournamentsInvited.pull(tournament_id);
                 user.tournamentsActive.addToSet(tournament_id);
+
+                console.log('after: tour, user', tournament, user);
+                tournament.save();
+                user.save();
               } else if (action === 'invite'){
                 console.log('invite: inside inv');
                 tournament.participantsPending.addToSet(user_id);
                 user.tournamentsInvited.addToSet(tournament_id);
+
+                tournament.save();
+                user.save();
               } else {
                 return res.send(new Error('Invalid Action'));
               }
@@ -138,11 +161,12 @@ tournaments.inviteHandler = function(req, res, next){
           });
       }
     })
-    .catch(function(err){
-      if(err){
-        res.send(err);
+    .catch(function(error){
+      if(error){
+        res.send(error);
       }
-    });
+    })
+    .done();
   //remove from pending
   //find the user, and remove from invited
 }
@@ -151,8 +175,8 @@ tournaments.update = function(req, res, next){
   var updatedTournament = req.body;
   var query = {_id: req.params.tournament_id};
   findOneAndUpdate(query, updatedTournament, function(error, data){
-    if (err) {
-      res.send(err);
+    if (error) {
+      res.send(error);
     } else {
       res.sendStatus(204);
     }

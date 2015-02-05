@@ -1,7 +1,9 @@
+var Q = require('q');
 var superagent    = require('superagent');
 var chai          = require('chai');
 var expect        = chai.expect;
 var Tournament    = require('../server/tournaments/model.js');
+var User          = require('../server/users/model.js');
 var mongoose      = require('mongoose');
 
 var dbPath      = process.env.dbPath || 'mongodb://localhost/fitMunk';
@@ -11,12 +13,14 @@ mongoose.connection.on('error', function(err) {
     console.error('MongoDB error: %s', err);
 });
 
-
-
-var Q = require('q');
-
+var findById  = Q.nbind(Tournament.findById, Tournament);
 var find = Q.nbind(Tournament.find, Tournament);
 var findOne = Q.nbind(Tournament.findOne, Tournament);
+var u_findById = Q.nbind(User.findById, User);
+
+var ObjectId = require('mongodb').ObjectId;
+
+
 
 var exampleUsers = {
   1: derpMonkey
@@ -119,14 +123,13 @@ describe('SPOT TESTS: Single API Endpoints', function(){
     });
     it('can get a specific tournament', function(done){
       findOne({}).then(function(tourney){
-        console.log('tourney :', tourney);
         if(tourney){
           var t_id = tourney._id;
-          console.log('tID :', t_id);
           superagent.get(paths.t+t_id)
             .send()
             .end(function(err, data){
               if(err){console.log('error :', err);}
+              //Mongoose ObjectId needs to be converted to a string.
               expect(data.res.body._id).to.equal(t_id.toString());
               done();
             });
@@ -136,7 +139,85 @@ describe('SPOT TESTS: Single API Endpoints', function(){
       });
     })
   });
-  xdescribe('Invite Handler : ',function(){});
+  describe('Invite Handler : ',function(){
+    //Params: tournament_id
+    //Body: user_id, action
+    it('can send an invite to a user',function(done){
+      findOne({})
+        .then(function(tourney){
+        if(tourney){
+          var t_id = tourney._id;
+          return superagent.put(paths.t+t_id+'/invite')
+            .send(
+            {
+              user_id: PRE_INSERTED_USER_ID,
+              action: 'invite', 
+            })
+            .end(function(err, res){
+              if(err){console.log('error :', err);}
+              expect(res.statusCode).to.equal(204);
+
+              Tournament.findById(t_id).exec(function(err, tourney){
+                expect(tourney.participantsPending.indexOf(PRE_INSERTED_USER_ID)=== -1).to.equal(false);
+
+                User.findById(PRE_INSERTED_USER_ID).exec(function(err, user){
+                  expect(user.tournamentsInvited.indexOf(t_id.toString())=== -1).to.equal(false);
+                  done();
+                });
+              });
+            });
+        } else {
+          throw new Error('no tourney!');
+          done(new Error('no tourney!'));
+        }
+      })
+    });
+
+    it('can decline an invite for a user',function(done){
+      findOne({}).then(function(tourney){
+        console.log('inside findone');
+        if(tourney){
+          var t_id = tourney._id;
+          superagent.put(paths.t+t_id+'/declineInvite')
+            .send({
+              user_id: PRE_INSERTED_USER_ID,
+              action: 'decline', 
+            })
+            .end(function(err, res){
+              if(err){console.log('error :', err);}
+              //Mongoose ObjectId needs to be converted to a string.
+              expect(res.statusCode).to.equal(204);
+              done();
+            });
+        } else {
+          done(new Error('no tourney'));
+        }
+      });
+
+    });
+    xit('can accept an invite for a user',function(done){
+      //accept not tested, don't have a second user/user creation ye
+      findOne({}).then(function(tourney){
+      if(tourney){
+        var t_id = tourney._id;
+        superagent.put(paths.t+t_id+'/acceptInvite')
+          .send({
+              user_id: PRE_INSERTED_USER_ID,
+              action: 'accept', 
+            })
+          .end(function(err, data){
+            if(err){console.log('error :', err);}
+            //Mongoose ObjectId needs to be converted to a string.
+            expect(data.res.body._id).to.equal(t_id.toString());
+            done();
+          });
+      } else {
+        done(new Error('no tourney'));
+      }
+    });
+    });
+
+  });
   xdescribe('Delete a Tournament (prematurely)',function(){
     it('deletes a tournament', function(done){
       //must find one tournament, save the ID, send the string
