@@ -61,6 +61,38 @@ tournaments.create = function(req, res, next){
     });
 };
 
+// tournaments.invite = function(req, res, next){
+// };
+
+tournaments.decline = function(req, res, next){
+  var tournament_id = req.params.tournament_id;
+  var user_id = req.body.user_id;
+
+  findOneTournament({tournament_id})
+    .then(function(tournament){
+      if (!tournament){
+        res.send(new Error('Tournament does not exist.'));
+      } else {
+        User.findOne({_id: user_id})
+          .then(function(user){
+            if(user){
+              //Must be string.
+              tournament.participantsPending.addToSet(user_id);
+              user.tournamentsInvite.pull(user_id);
+            } else {
+              res.send(new Error('Tournament exists, but user does not.'))
+            }
+          });
+      }
+    })
+    .catch(function(err){
+      if(err){
+        res.send(err);
+      }
+    });
+  //remove from pending
+  //find the user, and remove from invited
+}
 
 tournaments.update = function(req, res, next){
   var updatedTournament = req.body;

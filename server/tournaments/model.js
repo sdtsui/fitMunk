@@ -16,15 +16,9 @@ var tournamentsSchema = new mongoose.Schema({
   start: Date,
   end: Date,
   goal: Number,
-  participants: {
-    pending: [String],
-    active: [String]
-  },
-  results: {
-    gold: String,
-    silver: String,
-    bronze: String
-  }
+  participantsPending: [String],
+  participantsActive: [String],
+  results: [String]
 });
 
 module.exports = mongoose.model('tournaments', tournamentsSchema);

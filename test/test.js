@@ -13,7 +13,6 @@ var onComplete = function(error) {
 
 
 describe('tests the dbHelper functions', function (){
-
   var user = {};
   user._json = {};
   user._json.user = {};
