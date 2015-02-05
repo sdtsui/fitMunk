@@ -26,53 +26,53 @@ controller.getTournaments = function(req, res, next) {
     });
 };
 
-controller.declineTournament = function(req, res, next){
-  var tourneyString = req.params.tourneyString;
-  var user_id = req.params.user_id;
+// controller.declineTournament = function(req, res, next){
+//   var tourneyString = req.params.tourneyString;
+//   var user_id = req.params.user_id;
 
-  findOneUser({user_id: user_id})
-    .then(function(user){
-      if (!user) {
-        res.send(new Error('user doesnt exist'));
-      } else {
-        user.tournamentsInvited.pull(tourneyString);
-        res.sendStatus(204);
-      }
-    });
-};
+//   findOneUser({user_id: user_id})
+//     .then(function(user){
+//       if (!user) {
+//         res.send(new Error('user doesnt exist'));
+//       } else {
+//         user.tournamentsInvited.pull(tourneyString);
+//         res.sendStatus(204);
+//       }
+//     });
+// };
 
-controller.acceptTournament = function(req, res, next){
-  //remove from invited, add to active
-  var tourneyString = req.params.tourneyString;
-  var user_id = req.params.user_id;
-  //remove from invited, add to active
-  findOneUser({user_id: user_id})
-    .then(function(user){
-      if (!user) {
-        res.send(new Error('user doesnt exist'));
-      } else {
-        user.tournamentsInvited.pull(tourneyString);
-        user.tournamentsActive.addToSet(tourneyString);
-        res.sendStatus(204);
-      }
-    });
-};
+// controller.acceptTournament = function(req, res, next){
+//   //remove from invited, add to active
+//   var tourneyString = req.params.tourneyString;
+//   var user_id = req.params.user_id;
+//   //remove from invited, add to active
+//   findOneUser({user_id: user_id})
+//     .then(function(user){
+//       if (!user) {
+//         res.send(new Error('user doesnt exist'));
+//       } else {
+//         user.tournamentsInvited.pull(tourneyString);
+//         user.tournamentsActive.addToSet(tourneyString);
+//         res.sendStatus(204);
+//       }
+//     });
+// };
 
-controller.endTournament = function(req, res, next){
-  var tourneyString = req.params.tourneyString;
-  var user_id = req.params.user_id;
+// controller.endTournament = function(req, res, next){
+//   var tourneyString = req.params.tourneyString;
+//   var user_id = req.params.user_id;
 
-  findOneUser({user_id: user_id})
-    .then(function(user){
-      if (!user) {
-        res.send(new Error('user doesnt exist'));
-      } else {
-        user.tournamentsActive.pull(tourneyString);
-        user.tournamentsClosed.addToSet(tourneyString)
-        res.sendStatus(204);
-      }
-    });
-};
+//   findOneUser({user_id: user_id})
+//     .then(function(user){
+//       if (!user) {
+//         res.send(new Error('user doesnt exist'));
+//       } else {
+//         user.tournamentsActive.pull(tourneyString);
+//         user.tournamentsClosed.addToSet(tourneyString)
+//         res.sendStatus(204);
+//       }
+//     });
+// };
 
 
 // Old Code

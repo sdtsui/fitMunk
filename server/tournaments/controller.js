@@ -61,12 +61,10 @@ tournaments.create = function(req, res, next){
     });
 };
 
-// tournaments.invite = function(req, res, next){
-// };
-
-tournaments.decline = function(req, res, next){
+tournaments.inviteHandler = function(req, res, next){
   var tournament_id = req.params.tournament_id;
   var user_id = req.body.user_id;
+  var action = req.body.action;
 
   findOneTournament({tournament_id})
     .then(function(tournament){
@@ -75,12 +73,28 @@ tournaments.decline = function(req, res, next){
       } else {
         User.findOne({_id: user_id})
           .then(function(user){
-            if(user){
-              //Must be string.
-              tournament.participantsPending.addToSet(user_id);
-              user.tournamentsInvite.pull(user_id);
-            } else {
+            if(!user){
               res.send(new Error('Tournament exists, but user does not.'))
+            } else {
+              //Has user, must be a string.
+              if (action === 'decline') {
+                console.log('invite: inside dec');
+                tournament.participantsPending.pull(user_id);
+                user.tournamentsInvited.pull(tournament_id);
+              } else if (action === 'accept'){
+                console.log('invite: inside acc');
+                tournament.participantsPending.pull(user_id);
+                tournament.participantsActive.addToSet(user_id);
+                user.tournamentsInvited.pull(tournament_id);
+                user.tournamentsActive.addToSet(tournament_id);
+              } else if (action === 'invite'){
+                console.log('invite: inside inv');
+                tournament.participantsPending.addToSet(user_id);
+                user.tournamentsInvited.addToSet(tournament_id);
+              } else {
+                return res.send(new Error('Invalid Action'));
+              }
+              res.sendStatus(204);
             }
           });
       }

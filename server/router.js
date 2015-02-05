@@ -26,15 +26,13 @@ router.get('/api/tournaments/:tournament_id', tournaments.read);
 router.post('/api/tournaments/:user_id', tournaments.create);
 //PUT:
 //declineInvite
-router.put('/api/tournaments/:tournament_id/decline', tournaments.decline);
+router.put('/api/tournaments/:tournament_id/decline', tournaments.inviteHandler);
 // //acceptInvite
-// router.put('/api/tournaments/:tournament_id/decline', tournaments.decline);
+router.put('/api/tournaments/:tournament_id/accept', tournaments.inviteHandler);
 // //sendInvite
-// router.put('/api/tournaments/:tournament_id/decline', tournaments.decline);
+router.put('/api/tournaments/:tournament_id/invite', tournaments.inviteHandler);
 // //end
-// router.put('/api/tournaments/:tournament_id/decline', tournaments.decline);
-
-router.put('/api/tournaments/:user_id/:tournament_id', tournaments.invite); // needs to be revisited
+// router.put('/api/tournaments/:tournament_id/end', tournaments.end);
 router.put('/api/tournaments/:tournament_id', tournaments.update);
 router.delete('/api/tournaments/:tournament_id', tournaments.delete);
 
