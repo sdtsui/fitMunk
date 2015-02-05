@@ -64,6 +64,19 @@ angular.module('fm.navbar', [])
 						left:'0'
 					})
 			})
+			$(el).on('click','#left-navi',function(e){
+				$(document).find('div.left').animate({
+					left:'-200px'
+				});
+				$(document).find('div.navbar')
+					.animate({
+						left:'0'
+					})
+				$(document).find('div.main')
+					.animate({
+						left:'0'
+					})
+			})
 		}
 	}
 })
@@ -77,6 +90,19 @@ angular.module('fm.navbar', [])
 		link				 : function(scope,el,attr){
 			//Click event for closing left panel
 			el.find('.back-icon').bind('click',function(e){
+				$(document).find('div.right').animate({
+					right:'-200px'
+				});
+				$(document).find('div.navbar')
+					.animate({
+						left:'0'
+					})
+				$(document).find('div.main')
+					.animate({
+						left:'0'
+					})
+			})
+			$(el).on('click','#right-navi',function(e){
 				$(document).find('div.right').animate({
 					right:'-200px'
 				});

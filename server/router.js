@@ -32,7 +32,7 @@ router.get('/auth/fitbit', passport.authenticate('fitbit', { failureRedirect: '/
 
 router.get('/auth/fitbit/callback', passport.authenticate('fitbit', { failureRedirect: '/login' }), function (req,res) {
   console.log(res.session);
-  res.redirect('/progress');
+  res.redirect('/#/dashboard');
 });
 
 router.get('/userdata', function(req, res) {

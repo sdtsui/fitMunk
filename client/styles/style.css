@@ -1,6 +1,7 @@
 body {
 	margin: 0;
   font-family: Varela;
+  background-color: rgb(250,250,250);
 }
 
 .main {
@@ -130,4 +131,50 @@ body {
 
 #tourny-hiking:hover, #tourny-marathon:hover, #tourny-beach:hover {
 	box-shadow: 0 0 7px red;
+}
+
+#invite-icon {
+	border: none;
+	padding: 0px;
+	width: 20px;
+	height: 20px;
+	float: right;
+}
+
+#invite-icon:focus {
+	outline: none;
+}
+
+.invite-accept {
+	background-color: rgba(255,255,255,0);
+	color: green;
+}
+
+.invite-decline {
+	background-color: rgba(255,255,255,0);
+	color: red;
+}
+
+#dash-invites, #dash-progress, #dash-overview {
+	width: 76vmin;
+	height: 50vmin;
+	padding: 2vmin;
+	margin: 10px auto 0 auto;
+	box-shadow: 0 2px 5px gray;
+	text-align: left;
+	background-color: white;
+	overflow-y:auto; 
+}
+
+#invite-single {
+	width: 100%;
+	padding: 5px 0 5px 0;
+	color: gray;
+	box-shadow: 0 1px 0 rgb(229,229,229);
+}
+
+#widget-header {
+	margin: 0 0 10px 0;
+	font-size: 20px;
+	font-family: Roboto Slab;
 }
