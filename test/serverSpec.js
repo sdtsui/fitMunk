@@ -6,15 +6,11 @@ var mongoose = require('mongoose');
 mongoose.connection.on('error', function(err) {
     console.error('MongoDB error: %s', err);
 });
-console.log(mongoose.connection);
 
 var Q = require('q');
 
 var find = Q.nbind(Tournament.find, Tournament);
 var findOne = Q.nbind(Tournament.findOne, Tournament);
-console.log('find :', find);
-console.log('findOne :', findOne);
-
 var exampleUsers = {
   1: derpMonkey
 
@@ -63,42 +59,25 @@ var paths = {
 
 
 describe('SPOT TESTS: Single API Endpoints', function(){
-  console.log('sup');
+
   describe('Create One Tournament: ',function(){
     before(function(done){
-      console.log('in before');
-      Tournament.findOne({name: 'book'}, function(thing){
-          console.log('thing :',thing);
-        });
-        // .then(function(thing){
-        //   console.log('thing :',thing);
-        // });
-      console.log('finding One');
-      findOne({name: 'book'})
-        .then(function(tourney){
-          console.log('in then: book?')
-          if(tourney){
-            console.log('book yes');
-            var delPath = paths.t + tourney._id;
-            console.log(delPath);
-            superagent.del(delPath)
-              .send()
-              .end(function(err, res){
-                console.log('res : ', res);
-                if(err){
-                  console.log(err);
-                }else{
-                  console.log('successful delete');
-                }
-              });
-          } else {
-            console.log('book no');
+      var delPath = paths.t + 'testDel';
+      console.log(delPath);
+      superagent.del(delPath)
+        .send()
+        .end(function(err, res){
+          if(err){
+            console.log(err);
+          }else{
+            console.log('successful delete');
           }
-          done();
         });
+      done();
     });
+
     it('creates a new tournament', function(done){
-      superagent.post(paths.t+'12345')
+      superagent.post(paths.t+'54d34575d6ea4d32d3f1adf9')
         .send({
           name : 'book',
           description: 'bookdescription',

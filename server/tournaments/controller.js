@@ -20,7 +20,14 @@ String.prototype.toObjectId = function() {
   return new ObjectId(this.toString());
 };
 
+
+// NOTE: Database already has a user with the following test properties.
+// Remove after Pathelete createUser is hooked up mongoose db.
+// > db.users.find({})
+// { "_id" : ObjectId("54d34575d6ea4d32d3f1adf9"), "user_id" : "test", "full_name" : "testFullName" }
+
 var tournaments = {};
+
 
 tournaments.read = function(req, res, next) {
   var id = req.params.tournament_id;
@@ -51,6 +58,7 @@ tournaments.create = function(req, res, next){
   var newTournament = req.body;
   var userId = req.params.user_id;
   console.log('req.body : ', req.body);
+  console.log('req.params : ', req.params);
   findOne({name: req.body.name})
     .then(function(tournament){
       if (tournament) {
@@ -59,30 +67,37 @@ tournaments.create = function(req, res, next){
       } else {
         // console.log('inside non-dup case');
         // console.log('about to create newTourney :', newTournament);
-        Tournament.create(newTournament, function(error, data){
-          console.log('error : ', error);
-          console.log('data : ', data);
-          res.sendStatus(200);
-        });
+        // Tournament.create(newTournament, function(error, data){
+        //   console.log('error : ', error);
+        //   console.log('data : ', data);
+        //   res.sendStatus(200);
+        // });
+
+
+
         //old code, using native create instead.
-        // create(newTournament)
-        //   .then(function(error, tournament) {
-        //     console.log('error : ', error);
-        //     console.log('tournament :', tournament);
-        //     var id = tournament._id;
-        //     if (error) {
-        //       res.send(error);
-        //     } else {
-        //       User.findOne({_id: userId}, function(user){
-        //         user.tournamentsActive.addToSet(id);
-        //         res.sendStatus(204);
-        //       })
-        //       .catch(function(err){
-        //         console.log('in nested error');
-        //         res.send(err);
-        //       }); 
-        //     }
-          // });
+        //
+        create(newTournament)
+          .then(function(tournament) {
+            // console.log('error : ', error);
+            console.log('NEW tourney created :', tournament);
+            if (tournament) {
+              var id = tournament._id;
+              console.log('in else, about to call User.findOne :');
+              User.findOne({user_id: 'test'}, function(err, user){
+                console.log('in findOne, user :', user);
+                if(user){
+                  user.tournamentsActive.addToSet(id);
+                  res.sendStatus(200);
+                  user.save();
+                  console.log('saved user :', user);
+                }
+              });
+            } else {
+              console.log('no tournament');
+              res.sendStatus(500);
+            }
+          });
       }
     })
     .catch(function(err){
@@ -150,6 +165,20 @@ tournaments.update = function(req, res, next){
   });
 };
 
+tournaments.testDel = function(req, res, next){
+  console.log('inside testDel');
+  findOne({name : 'book'})
+    .then(function(tourney){
+      if(tourney){
+        console.log('found a tourney :', tourney);
+        tourney.remove();
+        res.sendStatus(200);
+      } else{
+        console.log('tourney not found : ', tourney);
+      }
+    })
+};
+
 tournaments.delete = function(req, res, next){
   console.log('in delete: req.params : ', req.params);
   console.log('type of req.params.t_id : ', typeof req.params.tournament_id.toObjectId);
@@ -167,6 +196,7 @@ tournaments.delete = function(req, res, next){
 
     })
 };
+
 
 tournaments.end = function(req, res, next){
 
