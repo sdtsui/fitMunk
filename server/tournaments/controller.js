@@ -195,7 +195,30 @@ tournaments.delete = function(req, res, next){
     })
 };
 
+tournaments.placeEntrant = function(category, user_id, t_id){
+  u_findById(user_id)
+    .then(function(user){
+      if(category === 'pending'){
+        //remove t_id from invited
+      } else if (cateogry === 'active'){
+        //remove t_id from active
+      } else {
+        throw new Error('category error: expects strings "pending" or "active"');
+      }
+    })
+};
+
 tournaments.end = function(req, res, next){
+  var t_id = req.params.tournament_id;
+  findById(t_id)
+    .find(function(tourney){
+      //two for loops, over the two arrays
+      // in each loop:
+      //  call function
+      //  remove from self
+      // for(var i = 0 ; i < )
+    })
+
   //stores t_id
   //loops over both arrays
     //uses a helper function to:
