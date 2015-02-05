@@ -57,13 +57,11 @@ var paths = {
 // // User Tournament API
 // router.get('/api/tournaments/:username', Users.getTournaments); //body: action: public or private;
 
-
 var PRE_INSERTED_USER_ID = '54d34575d6ea4d32d3f1adf9';
 
 describe('SPOT TESTS: Single API Endpoints', function(){
 
   describe('Create One Tournament: ',function(){
-
     before(function(done){
       var delPath = paths.t + 'testDel';
       superagent.del(delPath)
@@ -129,7 +127,7 @@ describe('SPOT TESTS: Single API Endpoints', function(){
   describe('Invite Handler : ',function(){
     //Params: tournament_id
     //Body: user_id, action
-    it('can send an invite to a user',function(done){
+    it('can send invites',function(done){
       findOne({})
         .then(function(tourney){
         if(tourney){
@@ -160,7 +158,7 @@ describe('SPOT TESTS: Single API Endpoints', function(){
       })
     });
 
-    it('can decline an invite for a user',function(done){
+    it('can decline invites',function(done){
       //not tested, but spot checked: 
       //saw length of both arrays decrement.
       findOne({}).then(function(tourney){
@@ -180,35 +178,56 @@ describe('SPOT TESTS: Single API Endpoints', function(){
           done(new Error('no tourney'));
         }
       });
-
     });
-    it('can accept an invite for a user',function(done){
+    it('can accept an invites',function(done){
       //not tested, but spot checked: 
       //saw length of both arrays decrement.
-      findOne({}).then(function(tourney){
-      if(tourney){
-        var t_id = tourney._id;
-        superagent.put(paths.t+t_id+'/acceptInvite')
-          .send({
-              user_id: PRE_INSERTED_USER_ID,
-              action: 'accept', 
-            })
-          .end(function(err, res){
-            if(err){console.log('error :', err);}
-            expect(res.statusCode).to.equal(204);
-            done();
+      findOne({})
+        .then(function(tourney){
+          if(tourney){
+            var t_id = tourney._id;
+            superagent.put(paths.t+t_id+'/acceptInvite')
+              .send({
+                  user_id: PRE_INSERTED_USER_ID,
+                  action: 'accept', 
+                })
+              .end(function(err, res){
+                if(err){console.log('error :', err);}
+                expect(res.statusCode).to.equal(204);
+                done();
+              });
+          } else {
+            done(new Error('no tourney'));
+          }
           });
-      } else {
-        done(new Error('no tourney'));
-      }
       });
-    });
 
   });
-  xdescribe('End, or Update a tournament',function(){
-    //input: a tournament ID
-    xit('Updates a tournament\'s details', function(done){
 
+  describe('End, or Update a tournament',function(){
+    //input: a tournament ID
+    //remember the controller function has no type/propertyName validation
+    it('Updates a tournament\'s details', function(done){
+      var newProps = {
+        name: 'It\'s Under 9000..',
+        description: 'Walk under 9000 steps. MEH.',
+        goal: 8999
+      };
+      findOne({})
+        .then(function(tourney){
+          if(tourney){
+            var t_id = tourney._id;
+            superagent.put(paths.t+t_id+'/update')
+              .send(newProps)
+              .end(function(err, res){
+                if(err){console.log(err);}
+                expect(res.statusCode).to.equal(200);
+                expect(res.body.name).to.equal(newProps.name);
+                expect(res.body.goal).to.equal(newProps.goal);
+                done();
+              });
+          }
+        });
     });
     xit('Ends a tournament', function(done){
       superagent.put(paths.t+'/'+'/end');//needs to findOne first
