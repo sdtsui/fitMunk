@@ -1,9 +1,11 @@
-# Pathlete
+# fitMunk
 
-Pathlete is a fun data visualization tool that will show trends in your movement and motivate you to achieve large goals through small steps. It will show you how far you've traveled across different distances to give you new perspectives of your progress. 
+fitMunk is a fun data visualization tool that will show trends in your movement and motivate you to achieve large goals through small steps. It will show you how far you've traveled across different distances to give you new perspectives of your progress. It will also allows you to create tournaments and challenge your friends.
 
 ## Team
+  - __Development Team Members__: Jacky Chan, Daniel Tsui, Devin Otway
 
+## Legacy Team
   - __Product Owner__: Karim Kyler
   - __Scrum Master__: Samin Sepasi
   - __Development Team Members__: Matt Polland, Jake Obron
