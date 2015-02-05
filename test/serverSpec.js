@@ -83,10 +83,11 @@ describe('SPOT TESTS: Single API Endpoints', function(){
         });
     });
   });
-  describe('Remove: ',function(){});
-  describe('Update: ',function(){});
-  describe('Delete',function(){});
-
+  describe('Get One or All Tournaments : ',function(){});
+  describe('Invite Handler : ',function(){});
+  describe('Delete a Tournament (prematurely)',function(){});
+  describe('End, or Update Details for a tournament',function(){});
+  describe('User: Get tournaments (active or closed)',function(){});
 })
 
 xdescribe('Testing CRUD functions at endpoints', function(){
@@ -94,5 +95,4 @@ xdescribe('Testing CRUD functions at endpoints', function(){
   describe('Remove: ',function(){});
   describe('Update: ',function(){});
   describe('Delete',function(){});
-
 })
