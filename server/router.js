@@ -23,6 +23,16 @@ passport.use(fitbitControl.fitbitStrategy);
 router.get('/api/tournaments/public', tournaments.read);
 router.get('/api/tournaments/:tournament_id', tournaments.read);
 router.post('/api/tournaments/:user_id', tournaments.create);
+//PUT:
+//declineInvite
+router.put('/api/tournaments/:tournament_id/decline', tournaments.decline);
+// //acceptInvite
+// router.put('/api/tournaments/:tournament_id/decline', tournaments.decline);
+// //sendInvite
+// router.put('/api/tournaments/:tournament_id/decline', tournaments.decline);
+// //end
+// router.put('/api/tournaments/:tournament_id/decline', tournaments.decline);
+
 router.put('/api/tournaments/:user_id/:tournament_id', tournaments.invite); // needs to be revisited
 router.put('/api/tournaments/:tournament_id', tournaments.update);
 router.delete('/api/tournaments/:tournament_id', tournaments.delete);
