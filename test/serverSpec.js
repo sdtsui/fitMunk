@@ -216,6 +216,28 @@ describe('SPOT TESTS: Single API Endpoints', function(){
     });
 
   });
+  xdescribe('End, or Update Details for a tournament',function(){
+    //input: a tournament ID
+    xit('Updates a tournament\'s details', function(done){
+
+    });
+    xit('Ends a tournament', function(done){
+
+    });
+  });
+
+
+  xdescribe('User: Get tournaments (active or closed)',function(){
+    //input: a user ID;
+    //return an array of tournaments, either active or closed;
+    xit('Retrieves all of the active tournaments for a user', function(done){
+
+    });
+    xit('Retrieves all of the closed tournaments for a user', function(done){
+
+    });
+  });
+
   xdescribe('Delete a Tournament (prematurely)',function(){
     it('deletes a tournament', function(done){
       //must find one tournament, save the ID, send the string
@@ -235,8 +257,6 @@ describe('SPOT TESTS: Single API Endpoints', function(){
         })
     })
   });
-  xdescribe('End, or Update Details for a tournament',function(){});
-  xdescribe('User: Get tournaments (active or closed)',function(){});
 })
 
 xdescribe('Testing CRUD functions at endpoints', function(){
