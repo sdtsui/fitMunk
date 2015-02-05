@@ -234,22 +234,18 @@ describe('SPOT TESTS: Single API Endpoints', function(){
       var userTournaments = {};
       var retrievedTournames = {};
       User.findById(PRE_INSERTED_USER_ID, function(err, user){
-        // console.log('foundAUser :', user);
         if(user){
           userTournaments.closed  = user.tournamentsClosed;
           userTournaments.invited = user.tournamentsInvited;
           userTournaments.active  = user.tournamentsActive;
         }
-        // console.log('USERTOURNEYS :::', userTournaments);
       });
       console.log(paths.u+PRE_INSERTED_USER_ID);
       superagent.get(paths.u+PRE_INSERTED_USER_ID)
         .send()
         .end(function(err, res){
           if(err){console.log(err);}
-          //res should be an array of tournaments;
-          console.log('t.c :', userTournaments.closed, userTournaments.closed.length);
-          console.log('r.c :', res.body.closed, res.body.closed.length);
+          //res.body should be a object, holding lists of tournaments;
           expect(userTournaments.closed.length).to.equal(res.body.closed.length);
           expect(userTournaments.closed[0]).to.equal(res.body.closed[0]);
 
