@@ -1,11 +1,23 @@
 var express = require('express');
 var router = express.Router();
 var request = require('request');
+
+//requiring middleware:
+var ejs            = require('ejs');
+var bodyParser     = require('body-parser');
+
 var Users = require('./users/controller.js');
+var Tournaments = require('./tournaments/controller.js');
+
 var passport = require('passport');
 var FitbitApiClient = require('fitbit-node');
 var fitbitControl = require('./utils/fitbit.js');
 
+//middleware:
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
+app.engine('html',ejs.renderFile);
+app.set('view engine', 'html');
 
 passport.serializeUser(function(user, done) {
   done(null, user);
@@ -20,20 +32,20 @@ passport.use(fitbitControl.fitbitStrategy);
 });
 
 // Tourney API
-router.get('/api/tournaments/public', tournaments.read);
-router.get('/api/tournaments/:tournament_id', tournaments.read);
-router.post('/api/tournaments/:user_id', tournaments.create);
+router.get('/api/tournaments/public', Tournaments.read);
+router.get('/api/tournaments/:tournament_id', Tournaments.read);
+router.post('/api/tournaments/:user_id', Tournaments.create);
 //PUT:
 //declineInvite
-router.put('/api/tournaments/:tournament_id/decline', tournaments.inviteHandler);
+router.put('/api/tournaments/:tournament_id/decline', Tournaments.inviteHandler);
 // //acceptInvite
-router.put('/api/tournaments/:tournament_id/accept', tournaments.inviteHandler);
+router.put('/api/tournaments/:tournament_id/accept', Tournaments.inviteHandler);
 // //sendInvite
-router.put('/api/tournaments/:tournament_id/invite', tournaments.inviteHandler);
+router.put('/api/tournaments/:tournament_id/invite', Tournaments.inviteHandler);
 // //end
 // router.put('/api/tournaments/:tournament_id/end', tournaments.end);
-router.put('/api/tournaments/:tournament_id', tournaments.update);
-router.delete('/api/tournaments/:tournament_id', tournaments.delete);
+router.put('/api/tournaments/:tournament_id', Tournaments.update);
+router.delete('/api/tournaments/:tournament_id', Tournaments.delete);
 
 // User Tournament API
 router.get('/api/tournaments/:username', user.readTournaments);

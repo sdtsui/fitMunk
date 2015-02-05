@@ -1,13 +1,14 @@
-var db      = require('../utils/db.js');
-var request = require('request');
-var q       = require('Q');
+// var request = require('request');
+var Q       = require('q');
 var User    = require('../users/model.js');
-var tournaments = require('../tournaments/model.js');
+var Tournaments = require('../tournaments/model.js');
 
 //Mongoose methods, promisified
 var findOneUser         = Q.nbind(User.find, User);
 var findOneAndUpdate    = Q.nbind(User.findOneAndUpdate, User);
 var findOneAndRemove    = Q.nbind(User.findOneAndRemove, User);
+
+var controller = {};
 
 controller.getTournaments = function(req, res, next) {
   var user_id = req.params.user_id;
@@ -17,11 +18,11 @@ controller.getTournaments = function(req, res, next) {
       if (!user) {
         res.send(new Error('user doesnt exist'));
       } else {
-        var tournaments = {};
-        tournaments.closed = user.tournamentsClosed;
-        tournaments.invited = user.tournamentsInvited;
-        tournaments.active = user.tournamentsActive;
-        res.send(tournaments);
+        var Tournaments = {};
+        Tournaments.closed = user.tournamentsClosed;
+        Tournaments.invited = user.tournamentsInvited;
+        Tournaments.active = user.tournamentsActive;
+        res.send(Tournaments);
       }
     });
 };
@@ -107,7 +108,7 @@ module.exports = {
   
   //add user activity, such as stairs and steps to their profile in the db
   addUserStats: function (userID, userStats) {
-    db.child('users').child(userID.)child('stats').update(JSON.parse(userStats));
+    db.child('users').child(userID).child('stats').update(JSON.parse(userStats));
   }
 
 };
