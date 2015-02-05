@@ -237,14 +237,19 @@ tournaments.end = function(req, res, next){
       //  call function
       //  remove from self
       // for(var i = 0 ; i < )
+      console.log('in Then : tourney', tourney);
       var pending = tourney.participantsPending;
-      var active = tourney.paritcipantsActive;
+      var active = tourney.participantsActive;
       console.log('in Then : t-pending, t-active :', pending, active);
+      console.log('lengths:', pending.length, active.length);
+
       for (var i = 0; i < pending.length; i++){
-        placeEntrant('pending', pending[i], t_id, tourney);
+        this.placeEntrant('pending', pending[i], t_id, tourney);
+        console.log('P: loop :'+i);
       }
-      for (var i = 0; i < activelength; i++){
-        placeEntrant('active', active[i], t_id, tourney);
+      for (var j = 0; j < active.length; j++){
+        this.placeEntrant('active', active[j], t_id, tourney);
+        console.log('A: loop :'+j);
       }
       res.send(tourney);
     })
