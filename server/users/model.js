@@ -1,8 +1,8 @@
 var mongoose = require('mongoose');
-var tournamentListSchema = require('../users/tournamentListModel.js');
+// var tournamentListSchema = require('../users/tournamentListModel.js');
 
 
-var UserSchema = new mongoose.Schema({
+var UsersSchema = new mongoose.Schema({
   user_id: {
     type      : String,
     required  : true,
@@ -18,10 +18,10 @@ var UserSchema = new mongoose.Schema({
   strideRunning: Number,
   strideWalking: Number,
   tournaments: {
-    closed: [tournamentListSchema],
-    invited: [tournamentListSchema],
-    inProgress: [tournamentListSchema]
+    closed: [String],
+    invited: [String],
+    inProgress: [String]
   }
 });
 
-module.exports = UserSchema;
+module.exports = mongoose.model('users', UsersSchema);

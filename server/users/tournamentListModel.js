@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 
-var tournamentListSchema = new Mongoose.Schema({
+var tournamentsListSchema = new Mongoose.Schema({
   tournament_id: String
 });
 
-module.exports = tournamentListSchema;
+module.exports = mongoose.model('tournamentsList', tournamentsListSchema);
