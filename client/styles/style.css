@@ -33,7 +33,7 @@ button#nav-create {
   background: rgb(15, 182, 255);
   color: white;
   font-weight: bold;
-  box-shadow: 0px 0px 10px black;
+  box-shadow: 0px 2px 10px black;
   bottom: 5vh;
   right: 5vh;
   z-index: 120;
@@ -189,7 +189,7 @@ button#nav-create:focus {
 	width: 76vmin;
 	height: 50vmin;
 	padding: 2vmin;
-	margin: 10px auto 0 auto;
+	margin: 10px auto 10px auto;
 	box-shadow: 0 2px 5px gray;
 	text-align: left;
 	background-color: white;
@@ -261,12 +261,13 @@ button#nav-create:focus {
 	box-shadow: 0 1px 5px gray;
 }
 
-.tourny-create {
-  width: 80%;
+#tourny-create {
+  width: 0%;
   position: fixed;
   background-color: rgb(15, 182, 255);
-  top: 13vh;
-  height: 58%;
+  top: 85vh;
+  right: 5%;
+  height: 0%;
   margin: 5%;
   border-radius: 1px;
   padding: 5%;
@@ -289,7 +290,7 @@ button#nav-create:focus {
 	display: inherit;
 }
 
-.tourny-create>input, .tourny-create>select {
+#tourny-create>input, #tourny-create>select {
   border: none;
   background-color: white;
   padding: 5px;

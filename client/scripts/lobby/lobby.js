@@ -11,9 +11,32 @@ angular.module('fm.lobby', [])
 		replace   	 : true,
 		templateUrl  : '../scripts/lobby/lobby.html',
 		link				 : function(scope,el,attr){
+			var toggle = false;
 			$(el).find('#nav-create').on('click',function(){
-				console.log('hi');
-				$(el).find('.tourny-blackout').toggleClass('show');
+				if(!toggle){
+					$(el).find('.tourny-blackout').toggleClass('show');
+					$(el).find('#tourny-create').animate({
+						  width: '80%',
+						  top: '13vh',
+						  right: '0',
+						  height: '58%',
+					},200);
+					toggle = true;
+				} else {
+					$(el).find('#tourny-create').animate({
+						  width: '0%',
+						  top: '85vh',
+						  right: '5vh',
+						  height: '0%',
+					},
+					{
+						duration: 200,
+						complete: function(){
+							$(el).find('.tourny-blackout').toggleClass('show');
+						}
+					});
+					toggle = false;
+				}
 			})
 		}
 	}
