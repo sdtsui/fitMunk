@@ -220,7 +220,6 @@ tournaments.placeEntrant = function(category, user_id, t_id, tourney){
         tourney.participantsActive.pull(user_id);
         tourney.save();
         console.log('tAfter : t_id, t_act', t_id, tourney.participantsActive);
-
       } else {
         throw new Error('category error: expects strings "pending" or "active"');
       }
@@ -228,15 +227,32 @@ tournaments.placeEntrant = function(category, user_id, t_id, tourney){
 };
 
 tournaments.end = function(req, res, next){
+  //signature: tournaments.placeEntrant = function(category, user_id, t_id, tourney){};
   var t_id = req.params.tournament_id;
+  console.log('in end, t_id :', t_id);
   findById(t_id)
-    .find(function(tourney){
+    .then(function(tourney){
       //two for loops, over the two arrays
       // in each loop:
       //  call function
       //  remove from self
       // for(var i = 0 ; i < )
+      var pending = tourney.participantsPending;
+      var active = tourney.paritcipantsActive;
+      console.log('in Then : t-pending, t-active :' pending, active);
+      for (var i = 0; i < pending.length; i++){
+        placeEntrant('pending', pending[i], t_id, tourney);
+      }
+      for (var i = 0; i < activelength; i++){
+        placeEntrant('active', active[i], t_id, tourney);
+      }
+      res.send(tourney);
     })
+    .catch(function(err){
+      if(err){
+        res.send(err);
+      }
+    });
 
   //stores t_id
   //loops over both arrays
