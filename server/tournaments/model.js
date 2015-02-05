@@ -2,10 +2,11 @@ var mongoose = require('mongoose');
 // var participantListSchema = require('../tournaments/participantListSchema.js');
 
 var tournamentsSchema = new mongoose.Schema({
-  tournament_id: mongoose.Schema.ObjectId,
+  _id: mongoose.Schema.ObjectId,
   name: {
     type: String,
-    required: true
+    required: true,
+    unique: true
   },
   description: String,
   recurrence: String,
