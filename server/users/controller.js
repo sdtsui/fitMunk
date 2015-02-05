@@ -1,10 +1,25 @@
-var db = require('../utils/db.js');
+var db      = require('../utils/db.js');
 var request = require('request');
+var q       = require('Q');
+var User    = require('../users/model.js');
+
+//Mongoose methods, promisified
+var findOneUser   = Q.nbind(User.find, User);
+var enterTournament   = Q.nbind(U)
 
 var user = {};
 
-user.readTournament = function(username, private){
-  // private will be an optional boolean true = return private tournaments only, false = return public tournaments only
+user.readTournament = function(req, res, next) {
+  var full_name = req.body.full_name;
+  var tournament_ids;
+  findOneUser({full_name: full_name})
+    .then(function(user){
+      if (!user) {
+        res.send(new Error('user doesnt exist'));
+      } else {
+        res.send(user.tournaments);
+      }
+    });
 };
 
 user.enterTournament = function(username, tournament_id){
@@ -14,6 +29,8 @@ user.enterTournament = function(username, tournament_id){
 user.leaveTournament = function(username, tournament_id){
 
 };
+
+module.exports = user;
 
 
 

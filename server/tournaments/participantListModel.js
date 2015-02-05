@@ -1,8 +1,7 @@
 var mongoose = require('mongoose');
 
-var participantListSchema = new mongoose.Schema({
+var participantsListSchema = new mongoose.Schema({
   user_id: String
 });
 
-
-module.exports = participantListSchema;
+module.exports = mongoose.model('participantsList', participantsListSchema);
