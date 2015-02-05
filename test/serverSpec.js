@@ -22,23 +22,11 @@ var ObjectId = require('mongodb').ObjectId;
 
 
 
-var exampleUsers = {
-  1: derpMonkey
+var exampleUsers = {};
 
-};
+var derpMonkey = {} //
 
-var derpMonkey = {
-  id: 12345,
-  username: 'derpMonkey',
-  password: 'herpWord',
-} //
-
-var exampleTourney = {
-  t_id: 123,
-  name: 'worlds',
-  username: '!!',
-  password: '??',
-}
+var exampleTourney = {}
 
 var paths = {
   t: 'http://localhost:1337/api/tournaments/'
@@ -222,24 +210,51 @@ describe('SPOT TESTS: Single API Endpoints', function(){
 
     });
     xit('Ends a tournament', function(done){
-
+      superagent.put(paths.t+'/'+'/end');//needs to findOne first
+      //pre-insert 4 total users
+      //  1 creator, sends 3 invites:
+      //  2 active: accept the invites
+      //  1 pending: does nothing with invite
+      //when tournament ends:
+      //  tournament pending and active lists will be empty
+      //  1 creator, 2 active, both lose a tournament from active list.
+      //  1 pending loses a tournament from invite list.
+      //    Feature: should be able to return a winner: 
+      //    no api calls yet
     });
   });
 
 
-  xdescribe('User: Get tournaments (active or closed)',function(){
+  describe('User: Get tournaments (active or closed)',function(){
     //input: a user ID;
     //return an array of tournaments, either active or closed;
-    xit('Retrieves all of the active tournaments for a user', function(done){
+    var userTournaments = {};
+    User.findById(PRE_INSERTED_USER_ID, function(user){
+      if(user){
+        userTournaments.closed  = user.tournamentsClosed;
+        userTournaments.invited = user.tournamentsInvited;
+        userTournaments.active  = user.tournamentsActive;
+      }
+    });
+    console.log(userTournaments);
 
+    superagent.get(paths.t+PRE_INSERTED_USER_ID)
+      .send()
+      .end(function(err, res){
+        if(err){console.log(err);}
+        //res should be an array of tournaments;
+        console.log(res.body);
+      });
+    xit('Retrieves all of the active tournaments for a user', function(done){
     });
     xit('Retrieves all of the closed tournaments for a user', function(done){
-
     });
+    xit('Retrieves all of the invted tournaments for a user', function(done){
+    });    
   });
 
-  xdescribe('Delete a Tournament (prematurely)',function(){
-    it('deletes a tournament', function(done){
+  xdescribe('Delete a Tournament',function(){
+    it('deletes a tournament (before ending)', function(done){
       //must find one tournament, save the ID, send the string
       //RECOMMEND USING NAME INSTEAD: 
       //Or deprecate: Functionality is only for testing.
