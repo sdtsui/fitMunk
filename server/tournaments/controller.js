@@ -103,44 +103,24 @@ tournaments.inviteHandler = function(req, res, next){
   var user_id = req.body.user_id;
   var action = req.body.action;
 
-  console.log('inside event handler: t_id, user_id, action :::',
-    tournament_id,
-    user_id,
-    action);
-
-  console.log('types: t, u, :   ',
-    typeof tournament_id,
-    typeof user_id);
-
   findById(tournament_id)
     .then(function(tournament){
-      console.log('inviteHandler : ', 'after search for tournament');
       if (!tournament){
         res.send(new Error('Tournament does not exist.'));
       } else {
-        console.log('inviteHandler: found tourney: outside findOne');
         u_findById(user_id)
           .then(function(user){
-            console.log('invitehandler: inside Then');
             if(!user){
               res.send(new Error('Tournament exists, but user does not.'))
             } else {
               //Has user, must be a string.
               if (action === 'decline') {
-                console.log('invite: inside dec');
                 tournament.participantsPending.pull(user_id);
                 user.tournamentsInvited.pull(tournament_id);
 
                 tournament.save();
                 user.save();
               } else if (action === 'accept'){
-                console.log('invite: inside acc');
-                // console.log('Test: beforeLENGTH: tourP, tourA, userI, userA',
-                //   tournament.participantsPending.length,
-                //   tournament.participantsActive.length,
-                //   user.tournamentsInvited.length,
-                //   user.tournamentsActive.length
-                // );
                 tournament.participantsPending.pull(user_id);
                 tournament.participantsActive.addToSet(user_id);
                 user.tournamentsInvited.pull(tournament_id);
@@ -148,14 +128,7 @@ tournaments.inviteHandler = function(req, res, next){
 
                 tournament.save();
                 user.save();
-                // console.log('Test: afterLENGTH: tourP, tourA, userI, userA',
-                //   tournament.participantsPending.length,
-                //   tournament.participantsActive.length,
-                //   user.tournamentsInvited.length,
-                //   user.tournamentsActive.length
-                // );
               } else if (action === 'invite'){
-                console.log('invite: inside inv');
                 tournament.participantsPending.addToSet(user_id);
                 user.tournamentsInvited.addToSet(tournament_id);
 

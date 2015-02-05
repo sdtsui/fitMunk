@@ -115,8 +115,6 @@ describe('SPOT TESTS: Single API Endpoints', function(){
         .send()
         .end(function(err, data){
           if(err){console.log('error :', err);}
-          // console.log('data.res.text', data.res.text);
-          // console.log('data.res.body', data.res.body);
           expect(data.res.body.length >0).to.equal(true);
           done();
         });
@@ -177,7 +175,6 @@ describe('SPOT TESTS: Single API Endpoints', function(){
       //not tested, but spot checked: 
       //saw length of both arrays decrement.
       findOne({}).then(function(tourney){
-        console.log('inside findone');
         if(tourney){
           var t_id = tourney._id;
           superagent.put(paths.t+t_id+'/declineInvite')
