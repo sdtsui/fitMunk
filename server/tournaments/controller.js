@@ -195,13 +195,32 @@ tournaments.delete = function(req, res, next){
     })
 };
 
-tournaments.placeEntrant = function(category, user_id, t_id){
+tournaments.placeEntrant = function(category, user_id, t_id, tourney){
   u_findById(user_id)
     .then(function(user){
       if(category === 'pending'){
         //remove t_id from invited
+        console.log('userBefore:  user, inv array :', user_id, user.tournamentsInvited);
+        user.tournamentsInvited.pull(t_id);
+        user.save();
+        console.log('userAfter:  user, inv array :', user_id, user.tournamentsInvited);
+
+        console.log('tBefore : t_id, t_pend', t_id, tourney.participantsPending);
+        tourney.participantsPending.pull(user_id);
+        tourney.save();
+        console.log('tAfter : t_id, t_pend', t_id, tourney.participantsPending);
       } else if (cateogry === 'active'){
         //remove t_id from active
+        console.log('userBefore:  user, active array :', user_id, user.tournamentsActive);
+        user.tournamentsActive.pull(t_id);
+        user.save();
+        console.log('userAfter:  user, active array :', user_id, user.tournamentsActive);
+
+        console.log('tBefore : t_id, t_act', t_id, tourney.participantsActive);
+        tourney.participantsActive.pull(user_id);
+        tourney.save();
+        console.log('tAfter : t_id, t_act', t_id, tourney.participantsActive);
+
       } else {
         throw new Error('category error: expects strings "pending" or "active"');
       }
