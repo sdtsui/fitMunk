@@ -2,9 +2,10 @@ var Q = require('q');
 var Tournament = require('../tournaments/model.js');
 var User = require('../users/model.js');
 
-var findTournaments = Q.nbind(Tournament.find, Tournament);
+var find = Q.nbind(Tournament.find, Tournament);
+var findOne = Q.nbind(Tournament.findOne, Tournament);
+var create = Q.nbind(Tournament.create, Tournament);
 var findOneTournament  = Q.nbind(Tournament.findById, Tournament);
-var createOneTournament = Q.nbind(Tournament.create, Tournament);
 var findOneAndUpdate = Q.nbind(Tournament.findOneAndUpdate, Tournament);
 var findOneAndRemove = Q.nbind(Tournament.findOneAndRemove, Tournament);
 
@@ -34,29 +35,46 @@ tournaments.read = function(req, res, next) {
 };
 
 tournaments.create = function(req, res, next){
+  console.log('create: ',create.toString());
+  console.log('inside create.');
   var newTournament = req.body;
   var userId = req.params.user_id;
-  findTournaments({name: req.body.name})
+  console.log('req.body : ', req.body);
+  findOne({name: req.body.name})
     .then(function(tournament){
       if (tournament) {
+        console.log('inside duplicate case : ', tournament, !!tournament);
         res.send(new Error('Tournament Already Exists'));
       } else {
-        createOneTournament(newTournament)
-          .then(function(error, tournament) {
-            var id = tournament._id;
-            if (error) {
-              res.send(error);
-            } else {
-              User.findOne({_id: userId}, function(user){
-                user.tournamentsActive.addToSet(id);
-                res.sendStatus(204);
-              })
-              .catch(function(err){
-                res.send(err);
-              }); 
-            }
-          });
+        console.log('inside non-dup case');
+        console.log('about to create newTourney :', newTournament);
+        Tournament.create(newTournament, function(error, data){
+          console.log('error : ', error);
+          console.log('data : ', data);
+        });
+        // create(newTournament)
+        //   .then(function(error, tournament) {
+        //     console.log('error : ', error);
+        //     console.log('tournament :', tournament);
+        //     var id = tournament._id;
+        //     if (error) {
+        //       res.send(error);
+        //     } else {
+        //       User.findOne({_id: userId}, function(user){
+        //         user.tournamentsActive.addToSet(id);
+        //         res.sendStatus(204);
+        //       })
+        //       .catch(function(err){
+        //         console.log('in nested error');
+        //         res.send(err);
+        //       }); 
+        //     }
+          // });
       }
+    })
+    .catch(function(err){
+      console.log('in parent error');
+      res.send(err);
     });
 };
 
@@ -130,5 +148,8 @@ tournaments.delete = function(req, res, next){
   });
 };
 
+tournaments.end = function(req, res, next){
+
+}
 module.exports = tournaments;
 

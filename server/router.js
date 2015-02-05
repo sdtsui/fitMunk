@@ -37,23 +37,28 @@ passport.use(fitbitControl.fitbitStrategy);
 });
 
 // Tourney API
+//    Get one or all tournaments.
 router.get('/api/tournaments/public', Tournaments.read);
 router.get('/api/tournaments/:tournament_id', Tournaments.read);
+
+//    Create One:
 router.post('/api/tournaments/:user_id', Tournaments.create);
-//PUT:
-//declineInvite
+
+//  InviteHandler:
 router.put('/api/tournaments/:tournament_id/decline', Tournaments.inviteHandler);
-// //acceptInvite
 router.put('/api/tournaments/:tournament_id/accept', Tournaments.inviteHandler);
-// //sendInvite
 router.put('/api/tournaments/:tournament_id/invite', Tournaments.inviteHandler);
-// //end
-// router.put('/api/tournaments/:tournament_id/end', tournaments.end);
+
+//  End, Update Details
+router.put('/api/tournaments/:tournament_id/end', Tournaments.end);
 router.put('/api/tournaments/:tournament_id', Tournaments.update);
+
+//Delete a tournament
 router.delete('/api/tournaments/:tournament_id', Tournaments.delete);
 
 // User Tournament API
 router.get('/api/tournaments/:username', Users.getTournaments); //body: action: public or private;
+
 
 router.get('/logout', function (req, res) {
   req.logout();
