@@ -33,8 +33,10 @@ tournaments.read = function(req, res, next) {
   var id = req.params.tournament_id;
   // console.log(req.params);
   if ( id ) {
+    console.log('inside ID');
     findOneTournament(id)
       .then(function(tournament){
+        console.log('inside then : tournament: ', tournament);
         res.send(tournament);
       })
       .catch(function(error){
@@ -42,7 +44,7 @@ tournaments.read = function(req, res, next) {
       });
 
   } else {
-    findTournaments({})
+    find({})
       .then(function(tournaments){
         res.send(tournaments);
       })
@@ -57,8 +59,6 @@ tournaments.create = function(req, res, next){
   // console.log('inside create.');
   var newTournament = req.body;
   var userId = req.params.user_id;
-  console.log('req.body : ', req.body);
-  console.log('req.params : ', req.params);
   findOne({name: req.body.name})
     .then(function(tournament){
       if (tournament) {
@@ -72,25 +72,19 @@ tournaments.create = function(req, res, next){
         //   console.log('data : ', data);
         //   res.sendStatus(200);
         // });
-
-
-
-        //old code, using native create instead.
-        //
         create(newTournament)
           .then(function(tournament) {
-            // console.log('error : ', error);
-            console.log('NEW tourney created :', tournament);
             if (tournament) {
               var id = tournament._id;
-              console.log('in else, about to call User.findOne :');
               User.findOne({user_id: 'test'}, function(err, user){
-                console.log('in findOne, user :', user);
                 if(user){
                   user.tournamentsActive.addToSet(id);
-                  res.sendStatus(200);
+                  tournament.participantsActive.addToSet(user._id);
                   user.save();
-                  console.log('saved user :', user);
+                  tournament.save();
+                  res.sendStatus(200);
+                  // console.log('saved user :', user);
+                  // console.log('saved tourn :', tournament);
                 }
               });
             } else {
@@ -101,7 +95,7 @@ tournaments.create = function(req, res, next){
       }
     })
     .catch(function(err){
-      console.log('in parent error');
+      console.log(err);
       res.send(err);
     });
 };
@@ -166,15 +160,12 @@ tournaments.update = function(req, res, next){
 };
 
 tournaments.testDel = function(req, res, next){
-  console.log('inside testDel');
   findOne({name : 'book'})
     .then(function(tourney){
       if(tourney){
-        console.log('found a tourney :', tourney);
         tourney.remove();
         res.sendStatus(200);
       } else{
-        console.log('tourney not found : ', tourney);
       }
     })
 };
