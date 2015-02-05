@@ -21,9 +21,8 @@ var exampleTourney = {
 }
 
 describe('Testing CRUD functions at endpoints', function(){
-
-  describe('Create: ',function(){
-  });
+  console.log('sup');
+  describe('Create: ',function(){});
   describe('Remove: ',function(){});
   describe('Update: ',function(){});
   describe('Delete',function(){});

@@ -1,5 +1,4 @@
-var db = require('../db.js');
-var q = require('Q');
+var Q = require('q');
 var Tournament = require('../tournaments/model.js');
 var User = require('../users/model.js');
 
@@ -66,7 +65,7 @@ tournaments.inviteHandler = function(req, res, next){
   var user_id = req.body.user_id;
   var action = req.body.action;
 
-  findOneTournament({tournament_id})
+  findOneTournament({_id: tournament_id})
     .then(function(tournament){
       if (!tournament){
         res.send(new Error('Tournament does not exist.'));
