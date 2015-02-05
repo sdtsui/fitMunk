@@ -7,9 +7,6 @@ var request = require('request');
 
 var Users = require('./users/controller.js');
 var Tournaments = require('./tournaments/controller.js');
-console.log('users : ', Users);
-console.log('Tournaments : ', Tournaments);
-
 
 var passport = require('passport');
 var FitbitApiClient = require('fitbit-node');

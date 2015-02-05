@@ -2,12 +2,23 @@ var Q = require('q');
 var Tournament = require('../tournaments/model.js');
 var User = require('../users/model.js');
 
+//Promisified Mongoose Functions.
 var find = Q.nbind(Tournament.find, Tournament);
 var findOne = Q.nbind(Tournament.findOne, Tournament);
 var create = Q.nbind(Tournament.create, Tournament);
+
+//old Namespaced
 var findOneTournament  = Q.nbind(Tournament.findById, Tournament);
 var findOneAndUpdate = Q.nbind(Tournament.findOneAndUpdate, Tournament);
 var findOneAndRemove = Q.nbind(Tournament.findOneAndRemove, Tournament);
+
+
+var ObjectId = (require('mongoose').Types.ObjectId);
+
+String.prototype.toObjectId = function() {
+  var ObjectId = (require('mongoose').Types.ObjectId);
+  return new ObjectId(this.toString());
+};
 
 var tournaments = {};
 
@@ -35,23 +46,25 @@ tournaments.read = function(req, res, next) {
 };
 
 tournaments.create = function(req, res, next){
-  console.log('create: ',create.toString());
-  console.log('inside create.');
+  // console.log('create: ',create.toString());
+  // console.log('inside create.');
   var newTournament = req.body;
   var userId = req.params.user_id;
   console.log('req.body : ', req.body);
   findOne({name: req.body.name})
     .then(function(tournament){
       if (tournament) {
-        console.log('inside duplicate case : ', tournament, !!tournament);
-        res.send(new Error('Tournament Already Exists'));
+        // console.log('inside duplicate case');
+        res.sendStatus(500);
       } else {
-        console.log('inside non-dup case');
-        console.log('about to create newTourney :', newTournament);
+        // console.log('inside non-dup case');
+        // console.log('about to create newTourney :', newTournament);
         Tournament.create(newTournament, function(error, data){
           console.log('error : ', error);
           console.log('data : ', data);
+          res.sendStatus(200);
         });
+        //old code, using native create instead.
         // create(newTournament)
         //   .then(function(error, tournament) {
         //     console.log('error : ', error);
@@ -138,14 +151,21 @@ tournaments.update = function(req, res, next){
 };
 
 tournaments.delete = function(req, res, next){
-  var query = {_id: req.params.tournament_id};
-  findOneAndRemove(query, function(err, data){
-    if (err) {
-      res.send(err);
-    } else {
-      res.sendStatus(204);
-    }
-  });
+  console.log('in delete: req.params : ', req.params);
+  console.log('type of req.params.t_id : ', typeof req.params.tournament_id.toObjectId);
+  var query = {_id: ObjectId(req.params.tournament_id)};
+  console.log(query);
+  findOne({name : 'book'})
+    .then(function(tourney){
+      if(tourney){
+        console.log('found a tourney :', tourney);
+        tourney.remove();
+        res.sendStatus(200);
+      } else{
+        console.log('tourney not found : ', tourney);
+      }
+
+    })
 };
 
 tournaments.end = function(req, res, next){
