@@ -1,32 +1,51 @@
 var db = require('../db.js');
-// var Q = require('q');
+var q = require('Q');
+var Tournament = require('../tournaments/model.js');
+
+var findAllTournaments = Q.nbind(Tournament.find, Tournament);
+var findOneTournament  = Q.nbind(Tournament.findById, Tournament);
+var createOneTournament = Q.nbind(Tournament.create, Tournament);
+
+
 
 var tournaments = {};
 
-tournaments.read = function(req, res, next){
-  // returns reference to tournaments in firebase
-  return db.child('tournaments').once('value', function(){
-    if (!data) {
-      console.err('[Error] No Tournaments Found');
-    } else {
-      res.send(data);
-    }
-  });
+
+tournaments.read = function(req, res, next) {
+  var id = req.params.tournament_id;
+  // console.log(req.params);
+  if ( id ) {
+    findOneTournament(id)
+      .then(function(tournament){
+        res.send(tournament);
+      })
+      .catch(function(error){
+        res.send(error);
+      });
+
+  } else {
+    findAllTournaments({})
+      .then(function(tournaments){
+        res.send(tournaments);
+      })
+      .catch(function(error){
+        res.send(error);
+      });
+  }
 };
 
+
 tournaments.create = function(req, res, next){
-  // returns reference to tournaments in firebase
-  return db.child('tournaments');
+  
 };
 
 tournaments.update = function(req, res, next){
-  // returns reference to a specific tournament in firebase
-  return db.child('tournaments').child(tournament_id);
+
+
 };
 
 tournaments.delete = function(req, res, next){
-  // returns reference to specific tournament in firebase
-  return db.child('tournaments').child(tournament_id);
+
 };
 
 
