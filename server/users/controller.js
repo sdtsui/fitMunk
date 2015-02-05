@@ -7,14 +7,16 @@ var Tournaments = require('../tournaments/model.js');
 var findOneUser         = Q.nbind(User.find, User);
 var findOneAndUpdate    = Q.nbind(User.findOneAndUpdate, User);
 var findOneAndRemove    = Q.nbind(User.findOneAndRemove, User);
+var findById            = Q.nbind(User.findById, User);
 
 var controller = {};
 
 controller.getTournaments = function(req, res, next) {
   var user_id = req.params.user_id;
-
-  findOneUser({user_id: user_id})
+  console.log('inside getTourneys; user_id', user_id);
+  findById(user_id)
     .then(function(user){
+      console.log('inside then; user: ', user);
       if (!user) {
         res.send(new Error('user doesnt exist'));
       } else {
@@ -74,12 +76,6 @@ controller.getTournaments = function(req, res, next) {
 //       }
 //     });
 // };
-
-controller.getTournaments = function(req, res, next){
-  //
-  var action = req.body.action;
-  //action will be active or closed;
-};
 
 // Old Code
 module.exports = {

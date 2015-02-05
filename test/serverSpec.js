@@ -29,7 +29,8 @@ var derpMonkey = {} //
 var exampleTourney = {}
 
 var paths = {
-  t: 'http://localhost:1337/api/tournaments/'
+  t: 'http://localhost:1337/api/tournaments/',
+  u: 'http://localhost:1337/api/users/'
 }
 
 
@@ -204,7 +205,7 @@ describe('SPOT TESTS: Single API Endpoints', function(){
     });
 
   });
-  xdescribe('End, or Update Details for a tournament',function(){
+  xdescribe('End, or Update a tournament',function(){
     //input: a tournament ID
     xit('Updates a tournament\'s details', function(done){
 
@@ -229,15 +230,16 @@ describe('SPOT TESTS: Single API Endpoints', function(){
     //input: a user ID;
     //return an array of tournaments, either active or closed;
     var userTournaments = {};
-    User.findById(PRE_INSERTED_USER_ID, function(user){
+    User.findById(PRE_INSERTED_USER_ID, function(err, user){
+      // console.log('foundAUser :', user);
       if(user){
         userTournaments.closed  = user.tournamentsClosed;
         userTournaments.invited = user.tournamentsInvited;
         userTournaments.active  = user.tournamentsActive;
       }
+      // console.log('USERTOURNEYS :::', userTournaments);
     });
-    console.log(userTournaments);
-
+    console.log(paths.t+PRE_INSERTED_USER_ID);
     superagent.get(paths.t+PRE_INSERTED_USER_ID)
       .send()
       .end(function(err, res){
