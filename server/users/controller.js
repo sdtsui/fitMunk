@@ -4,31 +4,91 @@ var q       = require('Q');
 var User    = require('../users/model.js');
 
 //Mongoose methods, promisified
-var findOneUser   = Q.nbind(User.find, User);
-var enterTournament   = Q.nbind(U)
+var findOneUser         = Q.nbind(User.find, User);
+var findOneAndUpdate    = Q.nbind(User.findOneAndUpdate, User);
+var findOneAndRemove    = Q.nbind(User.findOneAndRemove, User);
 
 var user = {};
 
-user.readTournament = function(req, res, next) {
-  var full_name = req.body.full_name;
+User.getTournaments = function(req, res, next) {
+  var user_id = req.params.user_id;
   var tournament_ids;
-  findOneUser({full_name: full_name})
+  findOneUser({user_id: user_id})
     .then(function(user){
       if (!user) {
         res.send(new Error('user doesnt exist'));
       } else {
-        res.send(user.tournaments);
+        var tournaments = {};
+        tournaments.closed = user.tournamentsClosed;
+        tournaments.invited = user.tournamentsInvited;
+        tournaments.inProgress = user.tournamentsInProgress;
+        res.send(tournaments);
       }
     });
 };
 
-user.enterTournament = function(username, tournament_id){
+User.createTournament = function(req, res, next){
+  var tourneyString = req.params.tourneyString;
+  var user_id = req.params.user_id;
+  findOneAndUpdate(
+    {user_id: user_id},
+    {$push: {tournamentsInProgress: tourneyString}},
+    {safe: true, upsert: true},
+    function(err, model) {
+        console.log(err);
+    })
+    .then(function(){
+      res.sendStatus(204)
+    })
+    .catch(function(err){
+      res.send(err);
+    });
+}
 
+User.declineTournament = function(req, res, next){
+  var tourneyString = req.params.tourneyString;
+  var user_id = req.params.user_id;
+  findOneAndUpdate(
+    {user_id: user_id},
+    {$pull: {tournamentsInvited: tourneyString}},
+    {safe: true, upsert: true},
+    function(err, model) {
+        console.log(err);
+    })
+    .then(function(user){
+      if (!user) {
+        res.send(new Error('user doesnt exist'));
+      } else {
+        res.sendStatus(204);
+      }
+    });
 };
 
-user.leaveTournament = function(username, tournament_id){
+User.acceptTournament = function(req, res, next){
+  //remove from invited, add to active
+  var tourneyString = req.params.tourneyString;
+  var user_id = req.params.user_id;
+  findOneAndUpdate(
+    {user_id: user_id},
+    {$pull: {tournamentsInvited: tourneyString}},
+    {safe: true, upsert: true},
+    function(err, model) {
+        console.log(err);
+    })
+    .then(function(){
+      findOneAndUpdate(
+        {}
+        );
+        }
+      }
+    })
+    .catch(function(err){
+      res.send(err);
+    });
+}
 
-};
+//need an endtournament
+
 
 module.exports = user;
 
