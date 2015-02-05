@@ -11,6 +11,7 @@ module.exports = exports = {
       userAuthorizationURL: 'https://www.fitbit.com/oauth/authorize'
     }, function (token, tokenSecret, profile, done) {   
       //after oath login call this success handler
+          console.log(profile);
           //add user to db
           Users.addUser(token, tokenSecret, profile);  
           //this line waits for 26 to finish

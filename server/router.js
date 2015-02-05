@@ -8,7 +8,6 @@ var fitbitControl = require('./utils/fitbit.js');
 
 
 passport.serializeUser(function(user, done) {
-  // console.log('serializeUser', arguments);
   done(null, user);
 });
 
@@ -27,15 +26,19 @@ router.get('/login', function (req, res, next){
 
 passport.use(fitbitControl.fitbitStrategy);
 router.get('/auth/fitbit', passport.authenticate('fitbit', { failureRedirect: '/login' }), function (req,res) {
+  // console.log('hiiiiiiiiiiiii',req.user);
 });
 
 
 router.get('/auth/fitbit/callback', passport.authenticate('fitbit', { failureRedirect: '/login' }), function (req,res) {
-  console.log(res.session);
+  // console.log(res.session);
   res.redirect('/#/dashboard');
 });
 
 router.get('/userdata', function(req, res) {
+  if(!req.user){
+    return;
+  }
   Users.getUserStats(req.user.encodedId).once('value', function(data) {
       res.send(data.val());
     });

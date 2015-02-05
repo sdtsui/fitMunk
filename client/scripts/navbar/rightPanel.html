@@ -1,6 +1,7 @@
 <div class='right'>
-	<div id='right-navi'><a id='right-anchor' href='#/profile'>Profile</a></div>
-	<div id='right-navi'><a id='right-anchor' ng-href='/login'>Login</a></div>
-	<div id='right-navi'><a id='right-anchor' href='/logout'>Logout</a></div>
+	<p id='right-name'>{{user.name}}</p>
+	<a id='right-anchor' href='#/profile'><div id='right-navi'>Profile</div></a>
+	<a id='right-anchor' ng-href='/login'><div id='right-navi'>Login</div></a>
+	<a id='right-anchor' href='/logout'><div id='right-navi'>Logout</div></a>
 	<img id='nav-icon' class='back-icon' src='./images/back-icon.png'></img>
 </div>

@@ -23,6 +23,33 @@ body {
 	text-align: center;
 }
 
+button#nav-create {
+    position: fixed;
+    font-size: 36px;
+    width: 50px;
+    height: 50px;
+    border: none;
+    border-radius: 30px;
+    background: rgb(15, 182, 255);
+    color: white;
+    font-weight: bold;
+    box-shadow: 0px 0px 10px gray;
+    bottom: 5vh;
+    right: 5vh;
+}
+
+button#nav-create:focus {
+	outline: none;
+}
+
+#right-name {
+	color: white;
+	text-shadow: 0 0 1px black;
+	font-weight: bold;
+	font-size: 35px;
+	font-family: Lobster;
+}
+
 #nav-logo3, #nav-icon {
 	height: 8vh;
 	padding: 1vh 2vh 1vh 2vh;
@@ -100,6 +127,7 @@ body {
 	text-shadow: 0 0 8px black;
 	display: inline-block;
 }
+
 
 #tourny-hiking {
 	background: url('../images/challenge-hiking.jpg');
@@ -179,13 +207,53 @@ body {
 	font-family: Roboto Slab;
 }
 
-#overview-table {
+#overview-table, #progress-table  {
 	width:100%;
 	line-height: 1.5;
 	text-align: right; 	
 	color: gray;
 }
 
-#overview-title {
+#overview-title, #progress-name {
 	text-align: left;
+}
+
+#progress-place, #progress-remain {
+	font-size: 12px;
+	text-align: right;
+}
+
+#progress {
+ width: 75%;   
+ position: relative;
+ padding: 3px;
+ position: absolute;
+ bottom: 5px;
+ font-size: 10px;
+ background-color: gray;
+}
+#status {
+ position: absolute;   
+ left: 5%;
+}
+
+#goal{
+ position: absolute;   
+ left: 65%;
+}
+
+#bar {
+ height: 20px;
+ background-color: green;
+ width: 30%;
+}
+
+#achievements-cards {
+	border-radius: 1px;
+	margin: 10px;
+	padding: 35px;
+	color: white;
+	text-shadow: 0 0 8px black;
+	position: relative;
+	box-shadow: 0 1px 5px gray;
 }

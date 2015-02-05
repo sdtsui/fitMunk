@@ -1,7 +1,6 @@
 angular.module('fm.navbar', [])
 
 .controller('NavbarCtrl',function($scope){
-
 })
 
 .directive('fmNavbar',function(){
@@ -9,6 +8,7 @@ angular.module('fm.navbar', [])
 		restrict  	 : 'EA',
 		scope				 : false,
 		replace   	 : true,
+		controller   : 'DashboardCtrl',
 		templateUrl  : '../scripts/navbar/navbar.html',
 		link				 : function(scope,el,attr){
 			//Click event for opening left panel
