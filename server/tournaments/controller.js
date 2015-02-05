@@ -239,7 +239,7 @@ tournaments.end = function(req, res, next){
       // for(var i = 0 ; i < )
       var pending = tourney.participantsPending;
       var active = tourney.paritcipantsActive;
-      console.log('in Then : t-pending, t-active :' pending, active);
+      console.log('in Then : t-pending, t-active :', pending, active);
       for (var i = 0; i < pending.length; i++){
         placeEntrant('pending', pending[i], t_id, tourney);
       }
