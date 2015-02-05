@@ -225,27 +225,28 @@ button#nav-create:focus {
 
 #progress {
  width: 75%;   
- position: relative;
  padding: 3px;
  position: absolute;
  bottom: 5px;
- font-size: 10px;
- background-color: gray;
+ font-size: 13px;
+ text-shadow: none;
 }
+
 #status {
  position: absolute;   
  left: 5%;
+ margin: 7px;
 }
 
 #goal{
  position: absolute;   
- left: 65%;
+ margin: 7px;
 }
 
 #bar {
  height: 20px;
- background-color: green;
- width: 30%;
+ background-color: rgb(255,0,107);
+ padding: 4px;
 }
 
 #achievements-cards {
