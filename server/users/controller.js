@@ -75,6 +75,11 @@ controller.getTournaments = function(req, res, next) {
 //     });
 // };
 
+controller.getTournaments = function(req, res, next){
+  //
+  var action = req.body.action;
+  //action will be active or closed;
+};
 
 // Old Code
 module.exports = {

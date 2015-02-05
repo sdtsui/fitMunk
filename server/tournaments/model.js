@@ -1,5 +1,4 @@
 var mongoose = require('mongoose');
-// var participantListSchema = require('../tournaments/participantListSchema.js');
 
 var tournamentsSchema = new mongoose.Schema({
   _id: mongoose.Schema.ObjectId,
@@ -9,9 +8,7 @@ var tournamentsSchema = new mongoose.Schema({
     unique: true
   },
   description: String,
-  recurrence: String,
   theme: String,
-  isPrivate: Boolean,
   isActive: Boolean,
   start: Date,
   end: Date,
@@ -22,7 +19,3 @@ var tournamentsSchema = new mongoose.Schema({
 });
 
 module.exports = mongoose.model('tournaments', tournamentsSchema);
-
-
-
-
