@@ -1,9 +1,16 @@
-angular.module('pathleteApp.services', [])
+angular.module('fm.services', [])
 
 .factory('Info', function ($http) {
 
+
+
+})
+
+.factory('User',function($http){
+  var user = {};
+  user.user = {};
   // gets user's fitbit info in the form of an object  
-  var getInfo = function(){
+  user.getInfo = function(){
     return $http({
       method: 'GET',
       url: '/userdata'
@@ -13,36 +20,78 @@ angular.module('pathleteApp.services', [])
     })
   };
 
-  return {
-    getInfo: getInfo
-  };
-
+  return user;
 })
 
-.factory('Tool', function($rootScope){
-  //sets default
-  var toolbarShow = true;
+.factory('Tournament',function(){
+  //test data
+  var tourny = {
+    _id: 'asd4758asdf586',
+    name: '500K Challenge',
+    description: 'Walk 500000 Weekly!',
+    theme: 'hiking',
+    status: 'OPEN',
+    startDate: '2015-2-14',
+    endDate: '2015-2-21',
+    goal: 500000,
+    participants: {
+      pending: [],
+      accepted: ['asdf1231234','asd1234asf']
+    },
+    result: {
+      gold: null,
+      silver: null,
+      bronze: null
+    }
+  };
 
-  //when called, this lets all children functions know that it has been called. 
-  var broadcast = function(state){
-    $rootScope.$broadcast('state.update', state);
-  }
+  //test data
+  var tourny1 = {
+    _id: 'asd4758asdf586asd',
+    name: '600K Challenge',
+    description: 'Walk 600000 Weekly!',
+    theme: 'marathon',
+    status: 'OPEN',
+    occurence: 7,
+    isPrivate: false,
+    startDate: '2015-2-14',
+    endDate: null,
+    goal: 600000,
+    participants: {
+      pending: [],
+      accepted: ['asdf1231234','asd1234asf']
+    },
+    result: {
+      gold: null,
+      silver: null,
+      bronze: null
+    }
+  };
 
-  //turns on toolbar and broadcasts that it has been toggles
-  var toolbarOn = function(){
-    toolbarShow = true;
-    broadcast({state: true});
-  }
+  var tourny2 = {
+    _id: 'asd4758asdf5asdfsd',
+    name: '700K Challenge',
+    description: 'Walk 700000 Weekly!',
+    theme: 'beach',
+    status: 'OPEN',
+    occurence: 7,
+    isPrivate: false,
+    startDate: '2015-2-14',
+    endDate: null,
+    goal: 700000,
+    participants: {
+      pending: [],
+      accepted: ['asdf1231234','asd1234asf']
+    },
+    result: {
+      gold: null,
+      silver: null,
+      bronze: null
+    }
+  };
 
-  //turns off toolbar and broadcasts that it has been toggles
-  var toolbarOff = function(){
-    toolbarShow = false;
-    broadcast({state: false});
-  }
+  var tournament = {};
+  tournament.tournaments = [tourny,tourny1,tourny2];
 
-  return {
-    toolbarShow: toolbarShow,
-    toolbarOn: toolbarOn,
-    toolbarOff: toolbarOff
-  }
+  return tournament;
 })

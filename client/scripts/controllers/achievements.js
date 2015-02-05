@@ -1,16 +1,14 @@
-'use strict';
+angular.module('fm.achievements',[])
 
-app.controller('AchievementsCtrl', function ($scope, $http, Info, Tool) {
+.controller('AchievementsCtrl', function ($scope, $http, User) {
     $scope.awesomeThings = [
       'HTML5 Boilerplate',
       'AngularJS',
       'Karma'
     ];
 
-    Tool.toolbarOn();
-
     $scope.getUserInfo = function(){
-      Info.getInfo()
+      User.getInfo()
         .then(function(user){
           $scope.userInfo = user;
           $scope.totalSteps = user.stats.lifetime.total.steps;
@@ -33,9 +31,8 @@ app.controller('AchievementsCtrl', function ($scope, $http, Info, Tool) {
             goal: 3400,
             unit:'steps',
             width: $scope.getPercent(3400, $scope.totalSteps),
-            // width: ($scope.totalFlights/2900)*100 < 100 ? ($scope.totalFlights/2900)*100 : 100,
             current: $scope.totalSteps, 
-            image: "background-image: url(../images/GoldenGateBridge.jpg); background-size: contain; border: 1px solid black;"
+            image: "background-image: url(../images/GoldenGateBridge.jpg); background-size: cover;"
           },
           {
             name: 'Bay to Breakers',
@@ -44,7 +41,7 @@ app.controller('AchievementsCtrl', function ($scope, $http, Info, Tool) {
             unit:'steps',
             width: $scope.getPercent(15000, $scope.totalSteps),
             current: $scope.totalSteps,
-            image: "background-image: url(../images/bayToBreakers.jpg); background-size: contain; border: 1px solid black;"
+            image: "background-image: url(../images/bayToBreakers.jpg); background-size: cover;"
           }, 
           {
             name: 'Shire to Mordor',
@@ -53,7 +50,7 @@ app.controller('AchievementsCtrl', function ($scope, $http, Info, Tool) {
             unit: 'steps',
             width: $scope.getPercent(3600000, $scope.totalSteps),
             current: $scope.totalSteps,
-            image: "background-image: url(../images/Mordor.jpg); background-size: contain; border: 1px solid black;"
+            image: "background-image: url(../images/Mordor.jpg); background-size: cover;"
 
           },
           {
@@ -63,7 +60,7 @@ app.controller('AchievementsCtrl', function ($scope, $http, Info, Tool) {
             unit: 'flights',
             width: $scope.getPercent(290, $scope.totalFlights),
             current: $scope.totalFlights,
-            image: "background-image: url(../images/Burj.jpg); background-size: contain; border: 1px solid black;"
+            image: "background-image: url(../images/Burj.jpg); background-size: cover;"
           },
           {
             name: 'Everest Challenge',
@@ -72,7 +69,7 @@ app.controller('AchievementsCtrl', function ($scope, $http, Info, Tool) {
             unit: 'flights',
             width: $scope.getPercent(1200, $scope.totalFlights),
             current: $scope.totalFlights,
-            image: "background-image: url(../images/Everest_background.jpg); background-size: contain; border: 1px solid black;"   
+            image: "background-image: url(../images/Everest_background.jpg); background-size: cover;"   
 
           },
           {
@@ -82,7 +79,7 @@ app.controller('AchievementsCtrl', function ($scope, $http, Info, Tool) {
             unit: 'steps',
             width: $scope.getPercent(5146000, $scope.totalSteps),
             current: $scope.totalSteps,
-            image: "background-image: url(../images/america.jpg); background-size: contain; border: 1px solid black;"
+            image: "background-image: url(../images/america.jpg); background-size: cover;"
           }
           ]          
           
@@ -90,10 +87,7 @@ app.controller('AchievementsCtrl', function ($scope, $http, Info, Tool) {
         });
     }
     $scope.getUserInfo();
-
-
-
-
+    console.log($scope.achievements);
     
   });
 
