@@ -166,6 +166,7 @@ tournaments.update = function(req, res, next){
   });
 };
 
+//For testing, using findOne instead of findById with tournament ids. 
 tournaments.testDel = function(req, res, next){
   findOne({name : 'book'})
     .then(function(tourney){
