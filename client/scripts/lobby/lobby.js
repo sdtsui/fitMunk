@@ -21,8 +21,12 @@ angular.module('fm.lobby', [])
 						  right: '0',
 						  height: '58%',
 					},200);
+					$(el).find('#nav-submit').animate({'margin-right': '60px'},200);
+					$(el).find('#nav-clear').animate({'margin-right': '100px'},200);
 					toggle = true;
 				} else {
+					$(el).find('#nav-submit').animate({'margin-right': '0px'},200);
+					$(el).find('#nav-clear').animate({'margin-right': '0px'},200);					
 					$(el).find('#tourny-create').animate({
 						  width: '0%',
 						  top: '85vh',
