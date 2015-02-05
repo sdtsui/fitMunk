@@ -13,10 +13,8 @@ var controller = {};
 
 controller.getTournaments = function(req, res, next) {
   var user_id = req.params.user_id;
-  console.log('inside getTourneys; user_id', user_id);
   findById(user_id)
     .then(function(user){
-      console.log('inside then; user: ', user);
       if (!user) {
         res.send(new Error('user doesnt exist'));
       } else {
@@ -29,55 +27,7 @@ controller.getTournaments = function(req, res, next) {
     });
 };
 
-// controller.declineTournament = function(req, res, next){
-//   var tourneyString = req.params.tourneyString;
-//   var user_id = req.params.user_id;
-
-//   findOneUser({user_id: user_id})
-//     .then(function(user){
-//       if (!user) {
-//         res.send(new Error('user doesnt exist'));
-//       } else {
-//         user.tournamentsInvited.pull(tourneyString);
-//         res.sendStatus(204);
-//       }
-//     });
-// };
-
-// controller.acceptTournament = function(req, res, next){
-//   //remove from invited, add to active
-//   var tourneyString = req.params.tourneyString;
-//   var user_id = req.params.user_id;
-//   //remove from invited, add to active
-//   findOneUser({user_id: user_id})
-//     .then(function(user){
-//       if (!user) {
-//         res.send(new Error('user doesnt exist'));
-//       } else {
-//         user.tournamentsInvited.pull(tourneyString);
-//         user.tournamentsActive.addToSet(tourneyString);
-//         res.sendStatus(204);
-//       }
-//     });
-// };
-
-// controller.endTournament = function(req, res, next){
-//   var tourneyString = req.params.tourneyString;
-//   var user_id = req.params.user_id;
-
-//   findOneUser({user_id: user_id})
-//     .then(function(user){
-//       if (!user) {
-//         res.send(new Error('user doesnt exist'));
-//       } else {
-//         user.tournamentsActive.pull(tourneyString);
-//         user.tournamentsClosed.addToSet(tourneyString)
-//         res.sendStatus(204);
-//       }
-//     });
-// };
-
-// Old Code
+// Legacy path code
 module.exports = {
   addUser: function (token, tokenSecret, profile, done){
     var err = '';
