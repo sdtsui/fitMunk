@@ -31,5 +31,9 @@ var app = angular.module('fitMunk', [
       template   : '<fm-lobby></fm-lobby>',
       controller : 'LobbyCtrl'
     })
-
+    .state('tournament', {
+      url: '/tournament',
+      template: '<fm-tournament></fm-tournament>',
+      controller: 'tournamentCtrl'
+    })
 });
