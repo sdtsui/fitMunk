@@ -154,12 +154,14 @@ tournaments.inviteHandler = function(req, res, next){
 
 tournaments.update = function(req, res, next){
   var updatedTournament = req.body;
+  console.log('inside update, req.body :', req.body);
   var query = {_id: req.params.tournament_id};
   findOneAndUpdate(query, updatedTournament, function(error, data){
+    console.log('in callback; data : ', data );
     if (error) {
       res.send(error);
     } else {
-      res.sendStatus(204);
+      res.send(data);
     }
   });
 };
@@ -193,9 +195,16 @@ tournaments.delete = function(req, res, next){
     })
 };
 
-
 tournaments.end = function(req, res, next){
-  
-}
-module.exports = tournaments;
+  //stores t_id
+  //loops over both arrays
+    //uses a helper function to:
+    //  -find user with user_id
+    //  -remove t_id from invited if pending
+    //  -remove t_id from active if active
+    //  -remove from Pending, or Active;
 
+
+}
+
+module.exports = tournaments;
