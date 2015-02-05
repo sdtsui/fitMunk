@@ -237,6 +237,7 @@ describe('SPOT TESTS: Single API Endpoints', function(){
             .send()
             .end(function(err, res){
               if(err){console.log(err);}
+              console.log('endTourney: res.body :', res.body);
               //res should be the whole tourney, check if errors exist;
               expect(res.body.participantsPending.length).to.equal(0);
               expect(res.body.participantsActive.length).to.equal(0);
