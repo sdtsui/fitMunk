@@ -229,8 +229,21 @@ describe('SPOT TESTS: Single API Endpoints', function(){
           }
         });
     });
-    xit('Ends a tournament', function(done){
-      superagent.put(paths.t+'/'+'/end');//needs to findOne first
+    it('Ends a tournament', function(done){
+      findOne({})
+        .then(function(tourney){
+          var t_id = tourney._id;
+          superagent.put(paths.t+t_id+'/end')
+            .send()
+            .end(function(err, res){
+              if(err){console.log(err);}
+              //res should be the whole tourney, check if errors exist;
+              expect(res.body.participantsPending.length).to.equal(0);
+              expect(res.body.participantsActive.length).to.equal(0);
+              done();
+            })
+        });
+      // superagent.put(paths.t+'/'+'/end');//needs to findOne first
       //pre-insert 4 total users
       //  1 creator, sends 3 invites:
       //  2 active: accept the invites

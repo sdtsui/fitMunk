@@ -253,7 +253,6 @@ tournaments.end = function(req, res, next){
         res.send(err);
       }
     });
-
   //stores t_id
   //loops over both arrays
     //uses a helper function to:
@@ -261,8 +260,6 @@ tournaments.end = function(req, res, next){
     //  -remove t_id from invited if pending
     //  -remove t_id from active if active
     //  -remove from Pending, or Active;
-
-
 }
 
 module.exports = tournaments;
