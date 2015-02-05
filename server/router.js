@@ -55,7 +55,7 @@ router.put('/api/tournaments/:tournament_id/update', Tournaments.update);
 router.delete('/api/tournaments/testDel', Tournaments.testDel);
 router.delete('/api/tournaments/:tournament_id', Tournaments.delete);
 // User Tournament API
-router.get('/api/tournaments/:user_id', Users.getTournaments); //body: action: public or private;
+router.get('/api/users/:user_id', Users.getTournaments); //body: action: public or private;
 
 
 router.get('/logout', function (req, res) {

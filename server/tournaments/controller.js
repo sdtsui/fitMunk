@@ -195,7 +195,7 @@ tournaments.delete = function(req, res, next){
 
 
 tournaments.end = function(req, res, next){
-
+  
 }
 module.exports = tournaments;
 
