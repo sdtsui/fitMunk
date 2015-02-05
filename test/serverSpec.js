@@ -227,32 +227,40 @@ describe('SPOT TESTS: Single API Endpoints', function(){
 
 
   describe('User: Get tournaments (active or closed)',function(){
+    //Note: this is a complete e2e test.
     //input: a user ID;
     //return an array of tournaments, either active or closed;
-    var userTournaments = {};
-    User.findById(PRE_INSERTED_USER_ID, function(err, user){
-      // console.log('foundAUser :', user);
-      if(user){
-        userTournaments.closed  = user.tournamentsClosed;
-        userTournaments.invited = user.tournamentsInvited;
-        userTournaments.active  = user.tournamentsActive;
-      }
-      // console.log('USERTOURNEYS :::', userTournaments);
-    });
-    console.log(paths.t+PRE_INSERTED_USER_ID);
-    superagent.get(paths.t+PRE_INSERTED_USER_ID)
-      .send()
-      .end(function(err, res){
-        if(err){console.log(err);}
-        //res should be an array of tournaments;
-        console.log(res.body);
+    it('Retrieves "active", "closed", and "invited" tournaments for a user', function(done){
+      var userTournaments = {};
+      var retrievedTournames = {};
+      User.findById(PRE_INSERTED_USER_ID, function(err, user){
+        // console.log('foundAUser :', user);
+        if(user){
+          userTournaments.closed  = user.tournamentsClosed;
+          userTournaments.invited = user.tournamentsInvited;
+          userTournaments.active  = user.tournamentsActive;
+        }
+        // console.log('USERTOURNEYS :::', userTournaments);
       });
-    xit('Retrieves all of the active tournaments for a user', function(done){
+      console.log(paths.u+PRE_INSERTED_USER_ID);
+      superagent.get(paths.u+PRE_INSERTED_USER_ID)
+        .send()
+        .end(function(err, res){
+          if(err){console.log(err);}
+          //res should be an array of tournaments;
+          console.log('t.c :', userTournaments.closed, userTournaments.closed.length);
+          console.log('r.c :', res.body.closed, res.body.closed.length);
+          expect(userTournaments.closed.length).to.equal(res.body.closed.length);
+          expect(userTournaments.closed[0]).to.equal(res.body.closed[0]);
+
+          expect(userTournaments.active.length).to.equal(res.body.active.length);
+          expect(userTournaments.active[0]).to.equal(res.body.active[0]);
+
+          expect(userTournaments.invited.length).to.equal(res.body.invited.length);
+          expect(userTournaments.invited[0]).to.equal(res.body.invited[0]);
+          done();
+        });
     });
-    xit('Retrieves all of the closed tournaments for a user', function(done){
-    });
-    xit('Retrieves all of the invted tournaments for a user', function(done){
-    });    
   });
 
   xdescribe('Delete a Tournament',function(){
