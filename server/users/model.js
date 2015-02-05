@@ -17,9 +17,9 @@ var UsersSchema = new mongoose.Schema({
   },
   strideRunning: Number,
   strideWalking: Number,
-  tournamentsClosed: [],
-  tournamentsInvited: [],
-  tournamentsInProcess []
+  tournamentsClosed: [String],
+  tournamentsInvited: [String],
+  tournamentsActive: [String]
 });
 
 module.exports = mongoose.model('users', UsersSchema);

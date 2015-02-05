@@ -21,7 +21,7 @@ User.getTournaments = function(req, res, next) {
         var tournaments = {};
         tournaments.closed = user.tournamentsClosed;
         tournaments.invited = user.tournamentsInvited;
-        tournaments.inProgress = user.tournamentsInProgress;
+        tournaments.Active = user.tournamentsActive;
         res.send(tournaments);
       }
     });
@@ -30,60 +30,107 @@ User.getTournaments = function(req, res, next) {
 User.createTournament = function(req, res, next){
   var tourneyString = req.params.tourneyString;
   var user_id = req.params.user_id;
-  findOneAndUpdate(
-    {user_id: user_id},
-    {$push: {tournamentsInProgress: tourneyString}},
-    {safe: true, upsert: true},
-    function(err, model) {
-        console.log(err);
-    })
-    .then(function(){
-      res.sendStatus(204)
-    })
-    .catch(function(err){
-      res.send(err);
+  findOneUser({user_id: user_id})
+    .then(function(user){
+      if (!user) {
+        res.send(new Error('user doesnt exist'));
+      } else {
+        user.tournamentsActive.addToSet(tourneyString)
+        res.sendStatus(204);
+      }
     });
+  // findOneAndUpdate(
+  //   {user_id: user_id},
+  //   {$push: {tournamentsActive: tourneyString}},
+  //   {safe: true, upsert: true},
+  //   function(err, model) {
+  //       console.log(err);
+  //   })
+  //   .then(function(){
+  //     res.sendStatus(204)
+  //   })
+  //   .catch(function(err){
+  //     res.send(err);
+  //   });
 }
 
 User.declineTournament = function(req, res, next){
   var tourneyString = req.params.tourneyString;
   var user_id = req.params.user_id;
-  findOneAndUpdate(
-    {user_id: user_id},
-    {$pull: {tournamentsInvited: tourneyString}},
-    {safe: true, upsert: true},
-    function(err, model) {
-        console.log(err);
-    })
+
+  findOneUser({user_id: user_id})
     .then(function(user){
       if (!user) {
         res.send(new Error('user doesnt exist'));
       } else {
+        user.tournamentsInvited.pull(tourneyString)
         res.sendStatus(204);
       }
     });
+
+  // findOneAndUpdate(
+  //   {user_id: user_id},
+  //   {$pull: {tournamentsInvited: tourneyString}},
+  //   {safe: true, upsert: true},
+  //   function(err, model) {
+  //       console.log(err);
+  //   })
+  //   .then(function(user){
+  //     if (!user) {
+  //       res.send(new Error('user doesnt exist'));
+  //     } else {
+  //       res.sendStatus(204);
+  //     }
+  //   });
 };
 
 User.acceptTournament = function(req, res, next){
   //remove from invited, add to active
   var tourneyString = req.params.tourneyString;
   var user_id = req.params.user_id;
-  findOneAndUpdate(
-    {user_id: user_id},
-    {$pull: {tournamentsInvited: tourneyString}},
-    {safe: true, upsert: true},
-    function(err, model) {
-        console.log(err);
-    })
-    .then(function(){
-      findOneAndUpdate(
-        {}
-        );
-        }
+  //remove from invited, add to active
+  findOneUser({user_id: user_id})
+    .then(function(user){
+      if (!user) {
+        res.send(new Error('user doesnt exist'));
+      } else {
+        user.tournamentsInvited.pull(tourneyString);
+        user.tournamentsActive.addToSet(tourneyString);
+        res.sendStatus(204);
       }
-    })
-    .catch(function(err){
-      res.send(err);
+    });
+  // findOneAndUpdate(
+  //   {user_id: user_id},
+  //   {$pull: {tournamentsInvited: tourneyString}},
+  //   {safe: true, upsert: true},
+  //   function(err, model) {
+  //       console.log(err);
+  //   })
+  //   .then(function(){
+  //     findOneAndUpdate(
+  //       {}
+  //       );
+  //       }
+  //     }
+  //   })
+  //   .catch(function(err){
+  //     res.send(err);
+  //   });
+}
+
+User.endTournament = function(req, res, next){
+  var tourneyString = req.params.tourneyString;
+  var user_id = req.params.user_id;
+
+  findOneUser({user_id: user_id})
+    .then(function(user){
+      if (!user) {
+        res.send(new Error('user doesnt exist'));
+      } else {
+        user.tournamentsActive.pull(tourneyString);
+        user.tournamentsClosed.addToSet(tourneyString)
+        res.sendStatus(204);
+      }
     });
 }
 
