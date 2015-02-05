@@ -2,22 +2,27 @@ var express = require('express');
 var router = express.Router();
 var request = require('request');
 
-//requiring middleware:
-var ejs            = require('ejs');
-var bodyParser     = require('body-parser');
+// Requiring middleware:
+// var bodyParser     = require('body-parser');
 
 var Users = require('./users/controller.js');
 var Tournaments = require('./tournaments/controller.js');
+console.log('users : ', Users);
+console.log('Tournaments : ', Tournaments);
+
 
 var passport = require('passport');
 var FitbitApiClient = require('fitbit-node');
 var fitbitControl = require('./utils/fitbit.js');
 
-//middleware:
-app.use(bodyParser.urlencoded({extended: true}));
-app.use(bodyParser.json());
-app.engine('html',ejs.renderFile);
-app.set('view engine', 'html');
+var mongoose       = require('mongoose');
+var dbPath         = process.env.dbPath || 'mongodb://localhost/fitMunk';
+//connect to mongo
+mongoose.connect(dbPath);
+
+//Middleware:
+// app.use(bodyParser.urlencoded({extended: true}));
+// app.use(bodyParser.json());
 
 passport.serializeUser(function(user, done) {
   done(null, user);
@@ -48,11 +53,7 @@ router.put('/api/tournaments/:tournament_id', Tournaments.update);
 router.delete('/api/tournaments/:tournament_id', Tournaments.delete);
 
 // User Tournament API
-router.get('/api/tournaments/:username', user.readTournaments);
-router.get('/api/tournaments/:username/:publicOrPrivate', user.readTournaments); // might be able to handle this same logic within readTournaments
-router.post('/api/tournaments/:username/:tournament_id', user.enterTournament);
-router.delete('/api/tournaments/:username/:tournament_id', user.leaveTournament);
-
+router.get('/api/tournaments/:username', Users.getTournaments); //body: action: public or private;
 
 router.get('/logout', function (req, res) {
   req.logout();
