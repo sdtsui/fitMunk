@@ -2,15 +2,14 @@ angular.module('fm.dashboard', [])
 
 .controller('DashboardCtrl',function($http, $scope, User, Tournament){
 	angular.extend($scope,User);
-
-	if(!$scope.user.name){
+	var fetched = false;
+	if(!$scope.user.name && !fetched){
 		User.getInfo().then(function(d){
 			console.log(d);
-			$scope.user.name = d.name;
-			$scope.user.avatar = d.avatar;
+			fetched = true;
+			$scope.user = d;
 			$scope.user.strideRunning = Math.round(d.strideRunning);
 			$scope.user.strideWalking = Math.round(d.strideWalking);
-			$scope.user.lifetimeSteps = d.stats.lifetime.total.steps;
 			$scope.user.tournamentsActive = Tournament.tournaments;
 		})
 	}

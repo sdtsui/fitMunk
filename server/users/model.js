@@ -6,9 +6,9 @@ var UsersSchema = new mongoose.Schema({
   user_id: {
     type      : String,
     required  : true,
-    unique    : true,
-    lowercase : true
+    unique    : true
   },
+  avatar: String,
   tokenSecret: String,
   token: String,
   full_name: {
@@ -17,6 +17,7 @@ var UsersSchema = new mongoose.Schema({
   },
   strideRunning: Number,
   strideWalking: Number,
+  lifetimeSteps: Number,
   tournamentsClosed: [String],
   tournamentsInvited: [String],
   tournamentsActive: [String]
