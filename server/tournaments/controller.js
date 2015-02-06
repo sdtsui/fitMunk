@@ -21,14 +21,7 @@ String.prototype.toObjectId = function() {
   return new ObjectId(this.toString());
 };
 
-
-// NOTE: Database already has a user with the following test properties.
-// Remove after Pathelete createUser is hooked up mongoose db.
-// > db.users.find({})
-// { "_id" : ObjectId("54d34575d6ea4d32d3f1adf9"), "user_id" : "test", "full_name" : "testFullName" }
-
 var tournaments = {};
-
 
 tournaments.read = function(req, res, next) {
   var id = req.params.tournament_id;
@@ -53,23 +46,13 @@ tournaments.read = function(req, res, next) {
 };
 
 tournaments.create = function(req, res, next){
-  // console.log('create: ',create.toString());
-  // console.log('inside create.');
   var newTournament = req.body;
   var userId = req.params.user_id;
   findOne({name: req.body.name})
     .then(function(tournament){
       if (tournament) {
-        // console.log('inside duplicate case');
         res.sendStatus(500);
       } else {
-        // console.log('inside non-dup case');
-        // console.log('about to create newTourney :', newTournament);
-        // Tournament.create(newTournament, function(error, data){
-        //   console.log('error : ', error);
-        //   console.log('data : ', data);
-        //   res.sendStatus(200);
-        // });
         create(newTournament)
           .then(function(tournament) {
             if (tournament) {
@@ -81,8 +64,6 @@ tournaments.create = function(req, res, next){
                   user.save();
                   tournament.save();
                   res.sendStatus(200);
-                  // console.log('saved user :', user);
-                  // console.log('saved tourn :', tournament);
                 }
               });
             } else {
@@ -148,8 +129,6 @@ tournaments.inviteHandler = function(req, res, next){
       }
     })
     .done();
-  //remove from pending
-  //find the user, and remove from invited
 }
 
 tournaments.update = function(req, res, next){
@@ -211,7 +190,6 @@ tournaments.placeEntrant = function(category, user_id, t_id, tourney){
         tourney.save();
         console.log('tAfter : t_id, t_pend', t_id, tourney.participantsPending);
       } else if (cateogry === 'active'){
-        //remove t_id from active
         console.log('userBefore:  user, active array :', user_id, user.tournamentsActive);
         user.tournamentsActive.pull(t_id);
         user.save();

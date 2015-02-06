@@ -89,5 +89,3 @@ angular.module('fm.achievements',[])
     $scope.getUserInfo();
     
   });
-
-
