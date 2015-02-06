@@ -1,7 +1,6 @@
 {
   "name": "server",
   "version": "0.0.0",
-  "private": true,
   "scripts": {
     "start": "node ./server/bin/www",
     "test": "node server/bin/www& ./node_modules/.bin/mocha --bail --reporter nyan test/test.js; pkill -n node;"
