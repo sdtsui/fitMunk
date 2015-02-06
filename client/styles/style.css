@@ -257,6 +257,7 @@ body {
   z-index: 119;
   padding: 20px;
   margin-right: 5%;
+  text-align: left;
 }
 
 button#nav-create, button#nav-submit, button#nav-clear {

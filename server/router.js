@@ -39,7 +39,7 @@ router.get('/api/tournaments/public', Tournaments.read);
 router.get('/api/tournaments/:tournament_id', Tournaments.read);
 
 //    Create One:
-router.post('/api/tournaments/:user_id', Tournaments.create);
+router.post('/api/tournaments', Tournaments.create);
 
 //  InviteHandler:
 router.put('/api/tournaments/:tournament_id/declineInvite', Tournaments.inviteHandler);

@@ -2,6 +2,30 @@ angular.module('fm.lobby', [])
 
 .controller('LobbyCtrl',function($scope, Tournament){
 	angular.extend($scope, Tournament);
+
+	$scope.create = function(){
+		var tournyData = {
+			name				: $scope.name,
+			description : $scope.description,
+			goal				: $scope.goal,
+			theme				: $scope.theme,
+			start				: $scope.start,
+			end 				: $scope.end,
+			creator			: Tournament.user_id
+		};
+		Tournament.create(tournyData);
+		$scope.clear();
+	};
+
+	$scope.clear = function(){
+		$scope.name = '';
+		$scope.description = '';
+		$scope.goal = '';
+		$scope.theme = '';
+		$scope.start = '';
+		$scope.end = '';
+	};
+
 })
 
 .directive('fmLobby',function($animate){

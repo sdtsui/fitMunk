@@ -23,7 +23,7 @@ angular.module('fm.services', [])
   return user;
 })
 
-.factory('Tournament',function(){
+.factory('Tournament',function($http){
   //test data
   var tourny = {
     _id: 'asd4758asdf586',
@@ -91,6 +91,18 @@ angular.module('fm.services', [])
   };
 
   var tournament = {};
+
+  tournament.create = function(tournyData){
+    return $http({
+      method: 'POST',
+      url: '/api/tournaments',
+      data: tournyData
+    })
+    .then(function (resp) {
+      return resp.data;
+    })
+  }
+
   tournament.tournaments = [tourny,tourny1,tourny2];
 
   return tournament;
