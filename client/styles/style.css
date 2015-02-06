@@ -104,7 +104,7 @@ body {
 	width: 60vmin;
 	height: 20vmin;
 	border-radius: 1px;
-	margin: 5px 5px 0 0;
+	margin: 5px 5px 5px 0;
 	padding: 35px;
 	color: white;
 	font-size: 20px;
@@ -303,7 +303,7 @@ button#nav-create:focus, button#nav-submit:focus, button#nav-clear:focus {
   width: 100%;
   height: 100%;
   position: fixed;
-  background-color: rgba(0, 0, 0, 0.85);
+  background-color: rgba(0, 0, 0, 0.50);
   top: 0;
   left: 0;
   display: none;

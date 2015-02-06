@@ -6,7 +6,6 @@ angular.module('fm.dashboard', [])
 	var fetched = false;
 	if(!$scope.user.name && !fetched){
 		User.getInfo().then(function(d){
-			console.log(d);
 			fetched = true;
 			Tournament.user_id = d.user_id;
 			$scope.user = d;
