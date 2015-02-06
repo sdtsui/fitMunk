@@ -42,8 +42,8 @@ router.get('/api/tournaments/:tournament_id', Tournaments.read);
 router.post('/api/tournaments', Tournaments.create);
 
 //  InviteHandler:
-router.put('/api/tournaments/:tournament_id/declineInvite', Tournaments.inviteHandler);
-router.put('/api/tournaments/:tournament_id/acceptInvite', Tournaments.inviteHandler);
+router.put('/api/tournaments/:tournament_id/decline', Tournaments.inviteHandler);
+router.put('/api/tournaments/:tournament_id/accept', Tournaments.inviteHandler);
 router.put('/api/tournaments/:tournament_id/invite', Tournaments.inviteHandler);
 
 //  End, Update Details
@@ -56,6 +56,10 @@ router.delete('/api/tournaments/:tournament_id', Tournaments.delete);
 
 // User Tournament API
 router.get('/api/users/:user_id/tournaments', Users.getTournaments); //body: action: public or private;
+
+// User get all users 
+router.get('/api/users', Users.getAllUsers); //body: action: public or private;
+
 
 // Tournament FitBit Data
 // router.get('/api/tournaments/:tournament_id/fitbit-stats', FitBitControl.getStepsBetweenDates);

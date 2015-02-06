@@ -20,6 +20,17 @@ angular.module('fm.services', [])
     })
   };
 
+  //get all users
+  user.getAll = function(){
+    return $http({
+      method: 'GET',
+      url: '/api/users'
+    })
+    .then(function (resp) {
+      return resp.data;
+    })
+  };
+
   return user;
 })
 
@@ -53,6 +64,45 @@ angular.module('fm.services', [])
       return resp.data;
     })
   };
+
+  tournament.sendInvite = function(user_id,id){
+    return $http({
+      method: 'put',
+      url: '/api/tournaments/' + id +'/invite',
+      data: {
+        user_id: user_id
+      }
+    })
+    .then(function (resp) {
+      return resp.data;
+    })
+  };
+
+  tournament.acceptInvite = function(user_id,tournament_id){
+    return $http({
+      method: 'put',
+      url: '/api/tournaments/' + tournament_id +'/accept',
+      data: {
+        user_id: user_id
+      }
+    })
+    .then(function (resp) {
+      return resp.data;
+    })
+  }
+
+  tournament.declineInvite = function(user_id,tournament_id){
+    return $http({
+      method: 'put',
+      url: '/api/tournaments/' + tournament_id +'/decline',
+      data: {
+        user_id: user_id
+      }
+    })
+    .then(function (resp) {
+      return resp.data;
+    })
+  }
 
   return tournament;
 })

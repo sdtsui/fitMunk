@@ -13,6 +13,7 @@ var findOneAndUpdate = Q.nbind(Tournament.findOneAndUpdate, Tournament);
 var findOneAndRemove = Q.nbind(Tournament.findOneAndRemove, Tournament);
 
 var u_findById = Q.nbind(User.findById, User);
+var findOneUser = Q.nbind(User.findOne, User);
 
 var ObjectId = (require('mongoose').Types.ObjectId);
 
@@ -66,7 +67,7 @@ tournaments.create = function(req, res, next){
           User.findOne({user_id: req.body.creator}, function(err, user){
             if(user){
               user.tournamentsActive.addToSet(id);
-              tournament.participantsActive.addToSet(user._id);
+              tournament.participantsActive.addToSet(user.user_id);
               user.save();
               tournament.save();
               res.sendStatus(200);
@@ -87,14 +88,14 @@ tournaments.create = function(req, res, next){
 tournaments.inviteHandler = function(req, res, next){
   var tournament_id = req.params.tournament_id;
   var user_id = req.body.user_id;
-  var action = req.body.action;
+  var action = req.url.split('/').pop();
 
   findById(tournament_id)
     .then(function(tournament){
       if (!tournament){
         res.send(new Error('Tournament does not exist.'));
       } else {
-        u_findById(user_id)
+        findOneUser({user_id: user_id})
           .then(function(user){
             if(!user){
               res.send(new Error('Tournament exists, but user does not.'))
