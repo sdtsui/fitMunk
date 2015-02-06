@@ -42,8 +42,8 @@ router.get('/api/tournaments/:tournament_id', Tournaments.read);
 router.post('/api/tournaments', Tournaments.create);
 
 //  InviteHandler:
-router.put('/api/tournaments/:tournament_id/declineInvite', Tournaments.inviteHandler);
-router.put('/api/tournaments/:tournament_id/acceptInvite', Tournaments.inviteHandler);
+router.put('/api/tournaments/:tournament_id/decline', Tournaments.inviteHandler);
+router.put('/api/tournaments/:tournament_id/accept', Tournaments.inviteHandler);
 router.put('/api/tournaments/:tournament_id/invite', Tournaments.inviteHandler);
 
 //  End, Update Details

@@ -7,7 +7,7 @@
 		<form class='invitee-card' ng-submit='invite()'>
 				<select id='invitee-select' ng-model='invitee'>
 					<option></option>
-					<option ng-repeat='user in allUserName' value='{{user.user_id}}'>{{user.full_name}}</option>
+					<option ng-repeat='user in _available' value='{{user.user_id}}'>{{user.full_name}}</option>
 				</select>
 				<button type='submit' id='invitee-submit'>Invite</button>
 		</form>

@@ -3,19 +3,17 @@ angular.module('fm.tournament', [])
 .controller('tournamentCtrl', function($scope, $stateParams, Tournament, User){
   angular.extend($scope, $stateParams, Tournament, User);
 
-
   // Stores tournament Data (start, end, etc)
   $scope.tournamentData;
 
   // This is currently hard-coded, needs to be changed when Jacky gets the api working
   $scope.users = [];
 
-  //fetch all usernames
-  User.getAll()
-    .then(function(d){
-      $scope.allUserName = d;
-    });
+  $scope._exist = {};
+  $scope._available = [];
 
+
+  // send invite
   $scope.invite = function(){
     Tournament.sendInvite($scope.invitee,$stateParams.tournament_id);
     $scope.invitee = '';
@@ -25,12 +23,28 @@ angular.module('fm.tournament', [])
   Tournament.getOneTournament($stateParams.tournament_id).
     success(function(data, status){
       $scope.tournamentData = data;
-      console.log($scope.tournamentData);
+      //objectify existing users
+      data.participantsActive.forEach(function(active){
+        $scope._exist[active] = active;
+      });
+      //objectify existing users
+      data.participantsPending.forEach(function(pending){
+        $scope._exist[pending] = pending;
+      });
     }).
     error(function(data, status){
       console.error('[Error] trying to fetch tournament data with status', status)
     });
 
+  //fetch all usernames, excluding exisiting users
+  User.getAll()
+    .then(function(users){
+      users.forEach(function(user){
+        if(!$scope._exist[user.user_id]){
+          $scope._available.push(user);
+        }
+      })
+    });
 
 })
 

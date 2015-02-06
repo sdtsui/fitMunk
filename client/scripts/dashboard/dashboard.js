@@ -1,7 +1,7 @@
 angular.module('fm.dashboard', [])
 
 .controller('DashboardCtrl',function($http, $scope, User, Tournament){
-	angular.extend($scope,User);
+	angular.extend($scope,User, Tournament);
 	$scope._active = [];
 	$scope._invited = [];
 	var fetched = false;
@@ -13,19 +13,44 @@ angular.module('fm.dashboard', [])
 			$scope.user.tournamentsActive.forEach(function(id){
 				Tournament.fetch(id)
 					.then(function(d){
-						$scope._active.push(d.name);
+						$scope._active.push(d);
 					})
 			});
 			$scope.user.tournamentsInvited.forEach(function(id){
 				Tournament.fetch(id)
 					.then(function(d){
-						$scope._invited.push(d.name);
+						$scope._invited.push(d);
 					})
 			});
 			$scope.user.strideRunning = Math.round(d.strideRunning);
 			$scope.user.strideWalking = Math.round(d.strideWalking);
 		})
+	};
+
+	$scope.decline = function(user_id, tournament_id){
+		Tournament.declineInvite(user_id,tournament_id);
+		$scope._invited.forEach(function(t,i){
+			if(t._id === tournament_id){
+				$scope._invited.splice(i,1);
+				return;
+			}
+		});
+	};
+
+	$scope.accept = function(user_id, tournament_id){
+		Tournament.acceptInvite(user_id,tournament_id);
+		$scope._invited.forEach(function(t,i){
+			if(t._id === tournament_id){
+				$scope._invited.splice(i,1);
+				return;
+			}
+		});
+		Tournament.fetch(tournament_id)
+		  .then(function(d){
+		  	$scope._active.push(d);
+		  })
 	}
+
 })
 
 .directive('fmDashboard',function(){
@@ -33,7 +58,6 @@ angular.module('fm.dashboard', [])
 		restrict  	 : 'EA',
 		scope				 : false,
 		replace   	 : true,
-		controller   : 'DashboardCtrl',
 		templateUrl  : '../scripts/dashboard/dashboard.html',
 		link				 : function(scope,el,attr){
 		}

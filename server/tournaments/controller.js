@@ -88,7 +88,7 @@ tournaments.create = function(req, res, next){
 tournaments.inviteHandler = function(req, res, next){
   var tournament_id = req.params.tournament_id;
   var user_id = req.body.user_id;
-  var action = req.body.action;
+  var action = req.url.split('/').pop();
 
   findById(tournament_id)
     .then(function(tournament){
