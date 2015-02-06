@@ -54,6 +54,7 @@ angular.module('fm.tournament', [])
       })
     });
 
+  //Draw graph
 })
 
 .directive('fmTournament', function(){
