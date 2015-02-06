@@ -52,7 +52,11 @@ angular.module('fm.tournament', [])
       })
     });
 
+<<<<<<< HEAD
 
+=======
+  //Draw graph
+>>>>>>> feat: adding chart div, dependency cdn
 })
 
 .directive('fmTournament', function(){
