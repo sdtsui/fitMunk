@@ -23,6 +23,7 @@ angular.module('fm.services', [])
   return user;
 })
 
+
 .factory('Tournament',function($http){
 
   var tournament = {};

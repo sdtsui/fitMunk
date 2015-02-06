@@ -53,10 +53,20 @@ router.put('/api/tournaments/:tournament_id/update', Tournaments.update);
 //Delete a tournament
 router.delete('/api/tournaments/testDel', Tournaments.testDel);
 router.delete('/api/tournaments/:tournament_id', Tournaments.delete);
+
 // User Tournament API
 router.get('/api/users/:user_id/tournaments', Users.getTournaments); //body: action: public or private;
 
+// Tournament FitBit Data
+// router.get('/api/tournaments/:tournament_id/fitbit-stats', FitBitControl.getStepsBetweenDates);
 
+
+
+
+
+
+
+// Legacy Pathlete Routes
 router.get('/logout', function (req, res) {
   req.logout();
   res.redirect('/');
