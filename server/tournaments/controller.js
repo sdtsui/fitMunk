@@ -53,49 +53,34 @@ tournaments.read = function(req, res, next) {
 };
 
 tournaments.create = function(req, res, next){
-  // console.log('create: ',create.toString());
-  // console.log('inside create.');
   var newTournament = req.body;
-  var userId = req.params.user_id;
-  findOne({name: req.body.name})
-    .then(function(tournament){
-      if (tournament) {
-        // console.log('inside duplicate case');
-        res.sendStatus(500);
-      } else {
-        // console.log('inside non-dup case');
-        // console.log('about to create newTourney :', newTournament);
-        // Tournament.create(newTournament, function(error, data){
-        //   console.log('error : ', error);
-        //   console.log('data : ', data);
-        //   res.sendStatus(200);
-        // });
-        create(newTournament)
-          .then(function(tournament) {
-            if (tournament) {
-              var id = tournament._id;
-              User.findOne({user_id: 'test'}, function(err, user){
-                if(user){
-                  user.tournamentsActive.addToSet(id);
-                  tournament.participantsActive.addToSet(user._id);
-                  user.save();
-                  tournament.save();
-                  res.sendStatus(200);
-                  // console.log('saved user :', user);
-                  // console.log('saved tourn :', tournament);
-                }
-              });
-            } else {
-              console.log('no tournament');
-              res.sendStatus(500);
+  if(!req.body.creator){
+    console.log('Not Logged In');
+    res.sendStatus(500);
+  } else {
+    create(newTournament)
+      .then(function(tournament) {
+        if (tournament) {
+          var id = tournament._id;
+          User.findOne({user_id: req.body.creator}, function(err, user){
+            if(user){
+              user.tournamentsActive.addToSet(id);
+              tournament.participantsActive.addToSet(user._id);
+              user.save();
+              tournament.save();
+              res.sendStatus(200);
             }
           });
-      }
-    })
+        } else {
+          console.log('no tournament');
+          res.sendStatus(500);
+        }
+      })
     .catch(function(err){
       console.log(err);
       res.send(err);
     });
+  }
 };
 
 tournaments.inviteHandler = function(req, res, next){

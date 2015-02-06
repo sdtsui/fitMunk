@@ -7,6 +7,7 @@ angular.module('fm.dashboard', [])
 		User.getInfo().then(function(d){
 			console.log(d);
 			fetched = true;
+			Tournament.user_id = d.user_id;
 			$scope.user = d;
 			$scope.user.strideRunning = Math.round(d.strideRunning);
 			$scope.user.strideWalking = Math.round(d.strideWalking);
