@@ -10,7 +10,6 @@ var findOneAndRemove    = Q.nbind(User.findOneAndRemove, User);
 var findById            = Q.nbind(User.findById, User);
 var createUser          = Q.nbind(User.create, User);
 
-
 var controller = {};
 
 controller.getTournaments = function(req, res, next) {
@@ -115,7 +114,6 @@ var exports = {
   addUserStats: function (userID, userStats) {
     db.child('users').child(userID).child('stats').update(JSON.parse(userStats));
   }
-
 };
 
 module.exports = controller;

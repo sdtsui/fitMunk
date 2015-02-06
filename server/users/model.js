@@ -1,6 +1,4 @@
 var mongoose = require('mongoose');
-// var tournamentListSchema = require('../users/tournamentListModel.js');
-
 
 var UsersSchema = new mongoose.Schema({
   user_id: {

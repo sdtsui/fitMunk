@@ -2,7 +2,6 @@
 var dotenv = require('dotenv');
 var test = dotenv.load();
 
-
 //Module dependencies.
 var app = require('../../app');
 var debug = require('debug')('server:server');

@@ -2,8 +2,6 @@ angular.module('fm.services', [])
 
 .factory('Info', function ($http) {
 
-
-
 })
 
 .factory('User',function($http){
@@ -92,6 +90,5 @@ angular.module('fm.services', [])
 
   var tournament = {};
   tournament.tournaments = [tourny,tourny1,tourny2];
-
   return tournament;
 })
