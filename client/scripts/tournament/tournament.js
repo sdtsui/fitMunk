@@ -1,7 +1,7 @@
 angular.module('fm.tournament', [])
 
-.controller('tournamentCtrl', function($scope, $stateParams, Tournament){
-  angular.extend($scope, $stateParams, Tournament);
+.controller('tournamentCtrl', function($scope, $stateParams, Tournament, User){
+  angular.extend($scope, $stateParams, Tournament, User);
 
 
   // Stores tournament Data (start, end, etc)
@@ -10,9 +10,19 @@ angular.module('fm.tournament', [])
   // This is currently hard-coded, needs to be changed when Jacky gets the api working
   $scope.users = [];
 
+  //fetch all usernames
+  User.getAll()
+    .then(function(d){
+      $scope.allUserName = d;
+    });
+
+  $scope.invite = function(){
+    Tournament.sendInvite($scope.invitee,$stateParams.tournament_id);
+    $scope.invitee = '';
+  }
 
   // fetch data from database
-  Tournament.getOneTournament($stateParams._id).
+  Tournament.getOneTournament($stateParams.tournament_id).
     success(function(data, status){
       $scope.tournamentData = data;
       console.log($scope.tournamentData);

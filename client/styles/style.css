@@ -167,7 +167,7 @@ body {
 	color: red;
 }
 
-#dash-invites, #dash-progress, #dash-overview {
+#dash-invites, #dash-progress, #dash-overview, .tournament-invite {
 	width: 76vmin;
 	height: 50vmin;
 	padding: 2vmin;
@@ -176,6 +176,30 @@ body {
 	text-align: left;
 	background-color: white;
 	overflow-y:auto; 
+}
+
+#invitee-select {
+	background-color: white;
+	padding: 5px;
+	width: 100%;
+	margin-top: 10%;
+}
+
+#invitee-card {
+	text-align: center;
+}
+
+#invitee-submit {
+	background-color: rgb(15, 182, 255);
+	padding: 10px;
+	width: 50%;
+	margin: 35px 25% 0 25%;
+	border: 0;
+	border-radius: 2px;
+}
+
+#invitee-submit:focus {
+	outline: none;
 }
 
 #invite-single {

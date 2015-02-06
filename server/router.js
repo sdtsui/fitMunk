@@ -57,6 +57,10 @@ router.delete('/api/tournaments/:tournament_id', Tournaments.delete);
 // User Tournament API
 router.get('/api/users/:user_id/tournaments', Users.getTournaments); //body: action: public or private;
 
+// User get all users 
+router.get('/api/users', Users.getAllUsers); //body: action: public or private;
+
+
 // Tournament FitBit Data
 // router.get('/api/tournaments/:tournament_id/fitbit-stats', FitBitControl.getStepsBetweenDates);
 

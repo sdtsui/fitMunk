@@ -20,6 +20,17 @@ angular.module('fm.services', [])
     })
   };
 
+  //get all users
+  user.getAll = function(){
+    return $http({
+      method: 'GET',
+      url: '/api/users'
+    })
+    .then(function (resp) {
+      return resp.data;
+    })
+  };
+
   return user;
 })
 
@@ -53,6 +64,20 @@ angular.module('fm.services', [])
       return resp.data;
     })
   };
+
+  tournament.sendInvite = function(user_id,id){
+    return $http({
+      method: 'put',
+      url: '/api/tournaments/' + id +'/invite',
+      data: {
+        user_id: user_id,
+        action: 'invite'
+      }
+    })
+    .then(function (resp) {
+      return resp.data;
+    })
+  }
 
   return tournament;
 })

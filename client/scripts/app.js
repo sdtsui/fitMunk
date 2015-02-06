@@ -7,6 +7,7 @@ var app = angular.module('fitMunk', [
   'fm.dashboard',
   'fm.achievements',
   'fm.tournament',
+  'mgcrea.ngStrap',
   'ui.router'
 ])
   

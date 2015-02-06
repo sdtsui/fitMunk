@@ -10,7 +10,6 @@ var findOneAndRemove    = Q.nbind(User.findOneAndRemove, User);
 var findById            = Q.nbind(User.findById, User);
 var createUser          = Q.nbind(User.create, User);
 
-
 var controller = {};
 
 controller.getTournaments = function(req, res, next) {
@@ -27,6 +26,12 @@ controller.getTournaments = function(req, res, next) {
         res.send(Tournaments);
       }
     });
+};
+
+controller.getAllUsers = function(req, res, next) {
+  User.find({},'full_name user_id -_id',function(err,users){
+    res.send(users);
+  })
 };
 
 controller.addUser = function (token, tokenSecret, profile, done){
