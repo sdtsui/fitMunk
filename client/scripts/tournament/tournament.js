@@ -15,8 +15,16 @@ angular.module('fm.tournament', [])
 
   // send invite
   $scope.invite = function(){
+    var user_id = $scope.invitee;
     Tournament.sendInvite($scope.invitee,$stateParams.tournament_id);
     $scope.invitee = '';
+    $scope._available.forEach(function(user,i){
+      console.log(user.user_id, user_id)
+      if(user.user_id === user_id){
+        $scope._available.splice(i,1);
+        return;
+      }
+    })
   }
 
   // fetch data from database
