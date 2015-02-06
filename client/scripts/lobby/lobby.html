@@ -7,25 +7,25 @@
 	</div>
 	<button id='nav-create'>+</button>
 	<div class='tourny-blackout'>
-		<button id='nav-submit'>O</button>
+		<button id='nav-submit' ng-submit="submitTournament()">O</button>
 		<button id='nav-clear'>X</button>
-		<form id='tourny-create'>
+		<form id='tourny-create' ng-submit="submitTournament()">
 			Name<br>
-			<input type='text' placeholder='Name'></input><br>
+			<input type='text' placeholder='Name' ng-model="name"></input><br>
 			Description<br>
-			<input type='text' placeholder='Description'></input><br>
+			<input type='text' placeholder='Description' ng-model="desc"></input><br>
 			Goal<br>
-			<input type='number' placeholder='Goal'></input><br>
+			<input type='number' placeholder='Goal' ng-model="goal"></input><br>
 			Theme<br>
-			<select>
+			<select ng-model="theme">
 				<option value='marathon'>Marathon</option>
 				<option value='beach'>Beach</option>
 				<option value='hiking'>Hiking</option>
 			</select><br>
 			Start<br>
-			<input type='date'></input><br>
+			<input type='date' ng-model="startD"></input><br>
 			End<br>
-			<input type='date'></input><br>
+			<input type='date' ng-model="endD"></input><br>
 		</form>
 	</div>
 </div>

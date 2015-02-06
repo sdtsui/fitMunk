@@ -23,7 +23,7 @@ angular.module('fm.services', [])
   return user;
 })
 
-.factory('Tournament',function(){
+.factory('Tournament',function($http){
   //test data
   var tourny = {
     _id: 'asd4758asdf586',
@@ -93,5 +93,40 @@ angular.module('fm.services', [])
   var tournament = {};
   tournament.tournaments = [tourny,tourny1,tourny2];
 
+  //declar params that will be bound to form in lobby.html
+  tournament.name;
+  tournament.desc;
+  tournament.goal;
+  tournament.startD;
+  tournament.endD;
+
+  tournament.submitTournament = function(){
+    $http.defaults.useXDomain = true;
+    delete $http.defaults.headers.common['X-Requested-With'];
+    var data = { 
+        name: this.name,
+        desc: this.desc,
+        goal: this.goal,
+        theme:this.theme,
+        startD:this.startD,
+        endD: this.endD
+      };
+
+    var req = {
+      method: 'POST',
+      url: 'localhost:1337/api/tournaments/54d34575d6ea4d32d3f1adf9',
+      data: JSON.stringify(data),
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Content-Type": "application/json"
+      }
+    }
+
+    return $http(req)
+              .then(function(data){
+                if(!data){console.log('error')}
+                console.log(data);
+              });
+  };
   return tournament;
 })

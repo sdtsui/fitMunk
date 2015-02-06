@@ -4,7 +4,7 @@ angular.module('fm.lobby', [])
 	angular.extend($scope, Tournament);
 })
 
-.directive('fmLobby',function($animate){
+.directive('fmLobby',function($animate, Tournament){
 	return {
 		restrict  	 : 'EA',
 		scope				 : false,
