@@ -92,8 +92,6 @@ angular.module('fm.services', [])
 
   var tournament = {};
   tournament.tournaments = [tourny,tourny1,tourny2];
-
-  //declar params that will be bound to form in lobby.html
   tournament.name;
   tournament.desc;
   tournament.goal;
@@ -112,21 +110,21 @@ angular.module('fm.services', [])
         endD: this.endD
       };
 
-    var req = {
-      method: 'POST',
-      url: 'localhost:1337/api/tournaments/54d34575d6ea4d32d3f1adf9',
-      data: JSON.stringify(data),
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Content-Type": "application/json"
-      }
-    }
 
-    return $http(req)
-              .then(function(data){
-                if(!data){console.log('error')}
-                console.log(data);
-              });
+    // var req = {
+    //   method: 'POST',
+    //   url: 'localhost:1337/api/tournaments/54d34575d6ea4d32d3f1adf9',
+    //   data: JSON.stringify(data),
+    //   headers: {
+    //     "Access-Control-Allow-Origin": "*",
+    //     "Content-Type": "application/json"
+    //   }
+    // }
+    // return $http(req)
+    //           .then(function(data){
+    //             if(!data){console.log('error')}
+    //             console.log(data);
+    //           });
   };
   return tournament;
 })
