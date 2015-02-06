@@ -17,49 +17,15 @@ var findById  = Q.nbind(Tournament.findById, Tournament);
 var find = Q.nbind(Tournament.find, Tournament);
 var findOne = Q.nbind(Tournament.findOne, Tournament);
 var u_findById = Q.nbind(User.findById, User);
-
 var ObjectId = require('mongodb').ObjectId;
-
-
-
-var exampleUsers = {};
-
-var derpMonkey = {} //
-
-var exampleTourney = {}
 
 var paths = {
   t: 'http://localhost:1337/api/tournaments/',
   u: 'http://localhost:1337/api/users/'
 }
-
-
-// // Tourney API
-// //    Get one or all tournaments.
-// router.get('/api/tournaments/public', Tournaments.read);
-// router.get('/api/tournaments/:tournament_id', Tournaments.read);
-
-// //    Create One:
-// router.post('/api/tournaments/:user_id', Tournaments.create);
-
-// //  InviteHandler:
-// router.put('/api/tournaments/:tournament_id/decline', Tournaments.inviteHandler);
-// router.put('/api/tournaments/:tournament_id/accept', Tournaments.inviteHandler);
-// router.put('/api/tournaments/:tournament_id/invite', Tournaments.inviteHandler);
-
-// //  End, Update Details
-// router.put('/api/tournaments/:tournament_id/end', tournaments.end);
-// router.put('/api/tournaments/:tournament_id', Tournaments.update);
-
-// //Delete a tournament
-// router.delete('/api/tournaments/:tournament_id', Tournaments.delete);
-
-// // User Tournament API
-// router.get('/api/tournaments/:username', Users.getTournaments); //body: action: public or private;
-
 var PRE_INSERTED_USER_ID = '54d34575d6ea4d32d3f1adf9';
 
-describe('SPOT TESTS: Single API Endpoints', function(){
+describe('Tests: Single API Endpoints', function(){
 
   describe('Create One Tournament: ',function(){
     before(function(done){
@@ -106,6 +72,7 @@ describe('SPOT TESTS: Single API Endpoints', function(){
           done();
         });
     });
+
     it('can get a specific tournament', function(done){
       findOne({}).then(function(tourney){
         if(tourney){
@@ -127,6 +94,7 @@ describe('SPOT TESTS: Single API Endpoints', function(){
   describe('Invite Handler : ',function(){
     //Params: tournament_id
     //Body: user_id, action
+    //Fully tested.
     it('can send invites',function(done){
       findOne({})
         .then(function(tourney){
@@ -179,6 +147,7 @@ describe('SPOT TESTS: Single API Endpoints', function(){
         }
       });
     });
+
     it('can accept an invites',function(done){
       //not tested, but spot checked: 
       //saw length of both arrays decrement.
@@ -213,6 +182,7 @@ describe('SPOT TESTS: Single API Endpoints', function(){
         description: 'Walk under 9000 steps. MEH.',
         goal: 8999
       };
+      
       findOne({})
         .then(function(tourney){
           if(tourney){
@@ -229,6 +199,7 @@ describe('SPOT TESTS: Single API Endpoints', function(){
           }
         });
     });
+
     it('Ends a tournament', function(done){
       findOne({})
         .then(function(tourney){
@@ -274,7 +245,6 @@ describe('SPOT TESTS: Single API Endpoints', function(){
           userTournaments.active  = user.tournamentsActive;
         }
       });
-      console.log(paths.u+PRE_INSERTED_USER_ID);
       superagent.get(paths.u+PRE_INSERTED_USER_ID)
         .send()
         .end(function(err, res){
