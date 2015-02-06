@@ -11,8 +11,8 @@ angular.module('fm.achievements',[])
       User.getInfo()
         .then(function(user){
           $scope.userInfo = user;
-          $scope.totalSteps = user.stats.lifetime.total.steps;
-          $scope.totalFlights = user.stats.lifetime.total.floors;
+          $scope.totalSteps = user.lifetimeSteps;
+          $scope.totalFlights = user.lifetimeSteps;
           if(!$scope.totalFlights){
             $scope.totalFlights = 0;
           }
@@ -87,7 +87,6 @@ angular.module('fm.achievements',[])
         });
     }
     $scope.getUserInfo();
-    console.log($scope.achievements);
     
   });
 

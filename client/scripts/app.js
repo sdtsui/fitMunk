@@ -23,7 +23,7 @@ var app = angular.module('fitMunk', [
     })
     .state('achievements',{
       url           : '/achievements',
-      templateUrl   : './views/achievements.html',
+      templateUrl   : '../scripts/achievements/achievements.html',
       controller    : 'AchievementsCtrl'
     })
     .state('main',{

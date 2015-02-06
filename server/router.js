@@ -79,9 +79,9 @@ router.get('/userdata', function(req, res) {
   if(!req.user){
     return;
   }
-  Users.getUserStats(req.user.encodedId).once('value', function(data) {
-      res.send(data.val());
-    });
+  Users.getUserStats(req.user.user_id, function(data) {
+    res.send(data);
+  });
 });
 
 module.exports = router;
