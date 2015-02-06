@@ -1,10 +1,12 @@
 {
   "name": "server",
   "version": "0.0.0",
-  "private": true,
   "scripts": {
     "start": "node ./server/bin/www",
     "test": "node server/bin/www& ./node_modules/.bin/mocha --bail --reporter nyan test/test.js; pkill -n node;"
+  },
+  "engines": {
+    "node": ">=0.10.3 <0.12"
   },
   "dependencies": {
     "body-parser": "^1.10.2",
