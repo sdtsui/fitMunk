@@ -26,10 +26,9 @@ angular.module('fm.lobby', [])
 		$scope.end = '';
 	};
 
-	$scope.go = function(route) {
-		$location.path(route);
-		console.log('scope.go called');
-	}
+	$scope.go = function(route, _id) {
+		$location.path(route + _id);
+	};
 })
 
 .directive('fmLobby',function($animate){

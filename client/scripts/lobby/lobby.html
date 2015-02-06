@@ -1,5 +1,5 @@
 <div>
-	<div class='tourny-cards' ng-repeat='tourny in tournaments | filter: query' ng-animate=" 'animate' " ng-click="go('/tournament')">
+	<div class='tourny-cards' ng-repeat='tourny in tournaments | filter: query' ng-animate=" 'animate' " ng-click="go('/tournament/', tourny._id)">
 		<div id='{{"tourny-"+tourny.theme}}' class='tourny-card'>
 			<span>{{tourny.name}}</span><br>
 			<span>{{tourny.description}}</span>

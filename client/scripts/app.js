@@ -6,6 +6,7 @@ var app = angular.module('fitMunk', [
   'fm.navbar',
   'fm.dashboard',
   'fm.achievements',
+  'fm.tournament',
   'ui.router'
 ])
   
@@ -32,7 +33,7 @@ var app = angular.module('fitMunk', [
       controller : 'LobbyCtrl'
     })
     .state('tournament', {
-      url: '/tournament',
+      url: '/tournament/:tournament_id',
       template: '<fm-tournament></fm-tournament>',
       controller: 'tournamentCtrl'
     })
