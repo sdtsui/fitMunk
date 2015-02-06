@@ -4,7 +4,7 @@
 		<tr ng-repeat='tourny in _active'>
 			<td id='progress-name'>{{tourny.name}}</td>
 			<td id='progress-place'>6th</td>
-			<td id='progress-remain'>{{tourny.end}}</td>
+			<td id='progress-remain'>{{tourny.end.split('T')[0]}}</td>
 		</tr>
 	</table>
 </div>
