@@ -33,4 +33,23 @@ module.exports = exports = {
         console.log('ERROR!',err);
       });
   }
+
+  // Currently migrating the API request to the client side
+  // getStepsBetweenDates: function(req, res, token, secret, startDate, endDate) {
+  //   var client = new FitbitApiClient(process.env.CONSUMER_KEY, process.env.CONSUMER_SECRET);
+  //   // the request body should contain an array of users with their userID
+  //   // need to confirm this is being sent on the client side (will it be a post or a get??)
+  //   var users = req.body.users; // this will be an array of userIds [ASHJDGJH, 123AUSDJ, etc]
+
+  //   var getUserData = function(userId) {
+  //     // this might not be the correct way of doing it...might have to pass userId as a parameter: https://www.npmjs.com/package/fitbit-node
+  //     client.requestResource('/1/user/' + userId + '/activities/steps/date/' + startDate + '/' + endDate + '.json', 'GET', token, secret).
+  //       then(function(data){
+  //         res.send(data);
+  //       }).
+  //       catch(function(error){
+  //         res.send(new Error('[Error] Getting Fitbit Data for Users'));
+  //       });
+  //   }
+  // }
 };

@@ -1,6 +1,6 @@
 angular.module('fm.lobby', [])
 
-.controller('LobbyCtrl',function($scope, Tournament){
+.controller('LobbyCtrl',function($scope, Tournament, $location){
 	angular.extend($scope, Tournament);
 
 	$scope.create = function(){
@@ -26,6 +26,9 @@ angular.module('fm.lobby', [])
 		$scope.end = '';
 	};
 
+	$scope.go = function(route, _id) {
+		$location.path(route + _id);
+	};
 })
 
 .directive('fmLobby',function($animate){
