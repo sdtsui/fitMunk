@@ -3,6 +3,13 @@ angular.module('fm.lobby', [])
 .controller('LobbyCtrl',function($scope, Tournament, $location){
 	angular.extend($scope, Tournament);
 
+	$scope.refresh = function(){
+		Tournament.fetch()
+		  .then(function(tournies){
+		  	$scope.tournaments = tournies;
+		  });
+	}
+
 	$scope.create = function(){
 		var tournyData = {
 			name				: $scope.name,
@@ -14,6 +21,7 @@ angular.module('fm.lobby', [])
 			creator			: Tournament.user_id
 		};
 		Tournament.create(tournyData);
+		$scope.refresh();
 		$scope.clear();
 	};
 
@@ -29,6 +37,7 @@ angular.module('fm.lobby', [])
 	$scope.go = function(route, _id) {
 		$location.path(route + _id);
 	};
+	$scope.refresh();
 })
 
 .directive('fmLobby',function($animate){

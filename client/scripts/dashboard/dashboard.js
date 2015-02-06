@@ -2,6 +2,7 @@ angular.module('fm.dashboard', [])
 
 .controller('DashboardCtrl',function($http, $scope, User, Tournament){
 	angular.extend($scope,User);
+	$scope._active = [];
 	var fetched = false;
 	if(!$scope.user.name && !fetched){
 		User.getInfo().then(function(d){
@@ -9,9 +10,14 @@ angular.module('fm.dashboard', [])
 			fetched = true;
 			Tournament.user_id = d.user_id;
 			$scope.user = d;
+			$scope.user.tournamentsActive.forEach(function(id){
+				Tournament.fetch(id)
+					.then(function(d){
+						$scope._active.push(d.name);
+					})
+			});
 			$scope.user.strideRunning = Math.round(d.strideRunning);
 			$scope.user.strideWalking = Math.round(d.strideWalking);
-			$scope.user.tournamentsActive = Tournament.tournaments;
 		})
 	}
 })
