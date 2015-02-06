@@ -29,12 +29,13 @@ String.prototype.toObjectId = function() {
 
 var tournaments = {};
 
-
+// [debug] - There might be an error in this read funciton, not getting tournament data back
 tournaments.read = function(req, res, next) {
   var id = req.params.tournament_id;
   if ( id ) {
     findById(id)
       .then(function(tournament){
+        console.log(tournament);
         res.send(tournament);
       })
       .catch(function(error){

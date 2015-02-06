@@ -24,73 +24,13 @@ angular.module('fm.services', [])
 })
 
 .factory('Tournament',function($http){
-  //test data
-  var tourny = {
-    _id: 'asd4758asdf586',
-    name: '500K Challenge',
-    description: 'Walk 500000 Weekly!',
-    theme: 'hiking',
-    status: 'OPEN',
-    startDate: '2015-2-14',
-    endDate: '2015-2-21',
-    goal: 500000,
-    participants: {
-      pending: [],
-      accepted: ['asdf1231234','asd1234asf']
-    },
-    result: {
-      gold: null,
-      silver: null,
-      bronze: null
-    }
-  };
-
-  //test data
-  var tourny1 = {
-    _id: 'asd4758asdf586asd',
-    name: '600K Challenge',
-    description: 'Walk 600000 Weekly!',
-    theme: 'marathon',
-    status: 'OPEN',
-    occurence: 7,
-    isPrivate: false,
-    startDate: '2015-2-14',
-    endDate: null,
-    goal: 600000,
-    participants: {
-      pending: [],
-      accepted: ['asdf1231234','asd1234asf']
-    },
-    result: {
-      gold: null,
-      silver: null,
-      bronze: null
-    }
-  };
-
-  var tourny2 = {
-    _id: 'asd4758asdf5asdfsd',
-    name: '700K Challenge',
-    description: 'Walk 700000 Weekly!',
-    theme: 'beach',
-    status: 'OPEN',
-    occurence: 7,
-    isPrivate: false,
-    startDate: '2015-2-14',
-    endDate: null,
-    goal: 700000,
-    participants: {
-      pending: [],
-      accepted: ['asdf1231234','asd1234asf']
-    },
-    result: {
-      gold: null,
-      silver: null,
-      bronze: null
-    }
-  };
 
   var tournament = {};
+
+  // returns a promise that will fetch the tournament data
+  tournament.getOneTournament = function(tournament_id){
+    return $http.get('/api/tournaments/' + tournament_id);
+  };
 
   tournament.create = function(tournyData){
     return $http({
@@ -101,9 +41,7 @@ angular.module('fm.services', [])
     .then(function (resp) {
       return resp.data;
     })
-  }
-
-  tournament.tournaments = [tourny,tourny1,tourny2];
+  };
 
   return tournament;
 })

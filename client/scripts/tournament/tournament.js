@@ -1,7 +1,22 @@
 angular.module('fm.tournament', [])
 
-.controller('tournamentCtrl', function($scope, $stateParams){
-  angular.extend($scope, $stateParams);
+.controller('tournamentCtrl', function($scope, $stateParams, Tournament){
+  angular.extend($scope, $stateParams, Tournament);
+
+  // Stores tournament Data (start, end, etc)
+  $scope.tournamentData;
+
+  // fetch data from database
+  Tournament.getOneTournament($stateParams._id).
+    success(function(data, status){
+      $scope.tournamentData = data;
+      console.log($scope.tournamentData);
+    }).
+    error(function(data, status){
+      console.error('[Error] trying to fetch tournament data with status', status)
+    });
+
+
 })
 
 .directive('fmTournament', function(){
