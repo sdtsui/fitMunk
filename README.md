@@ -1,3 +1,4 @@
+<img src='./client/images/fitmunk-logo.png'></img>
 # fitMunk
 
 fitMunk is a fun data visualization tool that will show trends in your movement and motivate you to achieve large goals through small steps. It will show you how far you've traveled across different distances to give you new perspectives of your progress. It will also allows you to create tournaments and challenge your friends.
