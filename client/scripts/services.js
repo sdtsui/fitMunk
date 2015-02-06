@@ -25,7 +25,6 @@ angular.module('fm.services', [])
 
 
 .factory('Tournament',function($http){
-
   var tournament = {};
 
   // returns a promise that will fetch the tournament data
@@ -38,6 +37,17 @@ angular.module('fm.services', [])
       method: 'POST',
       url: '/api/tournaments',
       data: tournyData
+    })
+    .then(function (resp) {
+      return resp.data;
+    })
+  };
+
+  tournament.fetch = function(id){
+    var id = id || 'public';
+    return $http({
+      method: 'GET',
+      url: '/api/tournaments/' + id
     })
     .then(function (resp) {
       return resp.data;
