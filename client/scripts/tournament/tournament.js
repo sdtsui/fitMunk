@@ -17,7 +17,6 @@ angular.module('fm.tournament', [])
     Tournament.sendInvite($scope.invitee,$stateParams.tournament_id);
     $scope.invitee = '';
     $scope._available.forEach(function(user,i){
-      console.log(user.user_id, user_id)
       if(user.user_id === user_id){
         $scope._available.splice(i,1);
         return;
@@ -82,7 +81,6 @@ angular.module('fm.tournament', [])
         for(var j = 0; j < datedValues.length ; j++){
           result.push(total += datedValues[j][1]);
         }
-        console.log(result);
         return result;
       }
 
@@ -148,7 +146,6 @@ angular.module('fm.tournament', [])
       scope.mockName4 = 'Wayne';
 
       var docWidth = $(document).find('#tournamentChart').width()*.8;
-      console.log(docWidth);
 
       scope.chart = c3.generate({
         bindto: '#tournamentChart',
@@ -176,9 +173,6 @@ angular.module('fm.tournament', [])
             ]
         });
       }, 4000);
-
-      var onlySVG = $('svg');
-      console.log(onlySVG);
     }
   }
 });

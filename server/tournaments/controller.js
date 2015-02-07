@@ -36,7 +36,6 @@ tournaments.read = function(req, res, next) {
   if ( id ) {
     findById(id)
       .then(function(tournament){
-        console.log(tournament);
         res.send(tournament);
       })
       .catch(function(error){
@@ -141,10 +140,8 @@ tournaments.inviteHandler = function(req, res, next){
 
 tournaments.update = function(req, res, next){
   var updatedTournament = req.body;
-  console.log('inside update, req.body :', req.body);
   var query = {_id: req.params.tournament_id};
   findOneAndUpdate(query, updatedTournament, function(error, data){
-    console.log('in callback; data : ', data );
     if (error) {
       res.send(error);
     } else {

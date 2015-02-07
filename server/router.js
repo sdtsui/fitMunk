@@ -67,7 +67,6 @@ router.get('/login', function (req, res, next){
 
 passport.use(fitbitControl.fitbitStrategy);
 router.get('/auth/fitbit', passport.authenticate('fitbit', { failureRedirect: '/login' }), function (req,res) {
-  // console.log('hiiiiiiiiiiiii',req.user);
 });
 
 router.get('/auth/fitbit/callback', passport.authenticate('fitbit', { failureRedirect: '/login' }), function (req,res) {

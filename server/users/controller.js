@@ -50,7 +50,6 @@ controller.addUser = function (token, tokenSecret, profile, done){
 
         createUser(newUser)
           .then(function(d){
-            console.log('created user');
             done(d);
           })
       } else {
@@ -61,7 +60,6 @@ controller.addUser = function (token, tokenSecret, profile, done){
         user.strideRunning = profile._json.user.strideLengthRunning;
         user.strideWalking = profile._json.user.strideLengthWalking;
         user.save();
-        console.log('Update User');
         done(user);
       }
     })
