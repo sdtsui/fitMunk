@@ -98,6 +98,18 @@ body {
 	display: inline-block;
 }
 
+.tournament-chart{
+  width: 76vmin;
+  height: 50vmin;
+  padding: 0;
+  margin: 10px auto 10px auto;
+  box-shadow: 0 2px 5px gray;
+  text-align: left;
+  background-color: white;
+  overflow:hidden; 
+  text-align: center;
+}
+
 .tourny-card {
 	max-width: 250px;
 	max-height: 100px;
