@@ -2,9 +2,6 @@ var express = require('express');
 var router = express.Router();
 var request = require('request');
 
-// Requiring middleware:
-// var bodyParser     = require('body-parser');
-
 var Users = require('./users/controller.js');
 var Tournaments = require('./tournaments/controller.js');
 
@@ -14,12 +11,7 @@ var fitbitControl = require('./utils/fitbit.js');
 
 var mongoose       = require('mongoose');
 var dbPath         = process.env.dbPath || 'mongodb://localhost/fitMunk';
-//connect to mongo
 mongoose.connect(dbPath);
-
-//Middleware:
-// app.use(bodyParser.urlencoded({extended: true}));
-// app.use(bodyParser.json());
 
 passport.serializeUser(function(user, done) {
   done(null, user);
@@ -60,15 +52,8 @@ router.get('/api/users/:user_id/tournaments', Users.getTournaments); //body: act
 // User get all users 
 router.get('/api/users', Users.getAllUsers); //body: action: public or private;
 
-
 // Tournament FitBit Data
 // router.get('/api/tournaments/:tournament_id/fitbit-stats', FitBitControl.getStepsBetweenDates);
-
-
-
-
-
-
 
 // Legacy Pathlete Routes
 router.get('/logout', function (req, res) {
