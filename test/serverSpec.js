@@ -20,42 +20,10 @@ var u_findById = Q.nbind(User.findById, User);
 
 var ObjectId = require('mongodb').ObjectId;
 
-
-
-var exampleUsers = {};
-
-var derpMonkey = {} //
-
-var exampleTourney = {}
-
 var paths = {
   t: 'http://localhost:1337/api/tournaments/',
   u: 'http://localhost:1337/api/users/'
 }
-
-
-// // Tourney API
-// //    Get one or all tournaments.
-// router.get('/api/tournaments/public', Tournaments.read);
-// router.get('/api/tournaments/:tournament_id', Tournaments.read);
-
-// //    Create One:
-// router.post('/api/tournaments/:user_id', Tournaments.create);
-
-// //  InviteHandler:
-// router.put('/api/tournaments/:tournament_id/decline', Tournaments.inviteHandler);
-// router.put('/api/tournaments/:tournament_id/accept', Tournaments.inviteHandler);
-// router.put('/api/tournaments/:tournament_id/invite', Tournaments.inviteHandler);
-
-// //  End, Update Details
-// router.put('/api/tournaments/:tournament_id/end', tournaments.end);
-// router.put('/api/tournaments/:tournament_id', Tournaments.update);
-
-// //Delete a tournament
-// router.delete('/api/tournaments/:tournament_id', Tournaments.delete);
-
-// // User Tournament API
-// router.get('/api/tournaments/:username', Users.getTournaments); //body: action: public or private;
 
 var PRE_INSERTED_USER_ID = '54d34575d6ea4d32d3f1adf9';
 
@@ -245,20 +213,8 @@ describe('SPOT TESTS: Single API Endpoints', function(){
               done();
             })
         });
-      // superagent.put(paths.t+'/'+'/end');//needs to findOne first
-      //pre-insert 4 total users
-      //  1 creator, sends 3 invites:
-      //  2 active: accept the invites
-      //  1 pending: does nothing with invite
-      //when tournament ends:
-      //  tournament pending and active lists will be empty
-      //  1 creator, 2 active, both lose a tournament from active list.
-      //  1 pending loses a tournament from invite list.
-      //    Feature: should be able to return a winner: 
-      //    no api calls yet
     });
   });
-
 
   describe('User: Get tournaments (active or closed)',function(){
     //Note: this is a complete e2e test.
@@ -312,11 +268,4 @@ describe('SPOT TESTS: Single API Endpoints', function(){
         })
     })
   });
-})
-
-xdescribe('Testing CRUD functions at endpoints', function(){
-  describe('Create: ',function(){});
-  describe('Remove: ',function(){});
-  describe('Update: ',function(){});
-  describe('Delete',function(){});
-})
+});
