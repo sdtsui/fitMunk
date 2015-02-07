@@ -53,7 +53,6 @@ angular.module('fm.tournament', [])
     });
 
 })
-
 .directive('fmTournament', function(){
   return {
     restrict    : 'EA',
@@ -87,6 +86,7 @@ angular.module('fm.tournament', [])
         return result;
       }
 
+      //Mock Data, for un-authenticated graph drawing.
       scope.mockAjax1  =
       {
         "activities-log-steps":[
@@ -147,7 +147,6 @@ angular.module('fm.tournament', [])
 
       scope.mockName4 = 'Wayne';
 
-
       var docWidth = $(document).find('#tournamentChart').width()*.8;
       console.log(docWidth);
 
@@ -178,11 +177,8 @@ angular.module('fm.tournament', [])
         });
       }, 4000);
 
-      // stuff to go here...
       var onlySVG = $('svg');
       console.log(onlySVG);
     }
   }
-})
-
-// add nested directives here...
+});

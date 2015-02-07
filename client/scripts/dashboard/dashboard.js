@@ -27,6 +27,12 @@ angular.module('fm.dashboard', [])
 		})
 	};
 
+	/**
+	 * Declines a pending invitation for a user, affects the tournament declined.
+	 * @param  {[type]} user_id       [description]
+	 * @param  {[type]} tournament_id [description]
+	 * @return {[type]}               [description]
+	 */
 	$scope.decline = function(user_id, tournament_id){
 		Tournament.declineInvite(user_id,tournament_id);
 		$scope._invited.forEach(function(t,i){
@@ -37,6 +43,7 @@ angular.module('fm.dashboard', [])
 		});
 	};
 
+	//Accepts a pending invitation.
 	$scope.accept = function(user_id, tournament_id){
 		Tournament.acceptInvite(user_id,tournament_id);
 		$scope._invited.forEach(function(t,i){

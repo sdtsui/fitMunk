@@ -2,8 +2,6 @@ angular.module('fm.services', [])
 
 .factory('Info', function ($http) {
 
-
-
 })
 
 .factory('User',function($http){
